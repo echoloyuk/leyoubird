@@ -1,0 +1,14 @@
+@media screen and (max-width: 2024px) {
+  body.leyoubird .le-main-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  body.leyoubird .le-main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
