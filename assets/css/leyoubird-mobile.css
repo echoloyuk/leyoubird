@@ -162,6 +162,7 @@
     font-weight: normal;
     padding: 0 1em;
     box-sizing: border-box;
+    color: #333;
   }
   body.leyoubird .le-image-info-panel > li.le-items > a > .le-image-info > span {
     display: block;
