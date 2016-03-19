@@ -1,3 +1,12 @@
+@font-face {font-family: 'iconfont';
+    src: url('../font/iconfont.eot'); /* IE9*/
+    src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../font/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
+    url('../font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+
 @media screen and (max-width:2024px){
     body.leyoubird{
         .le-main-footer{
@@ -6,6 +15,42 @@
             left:0;
             right:0;
             z-index:100;
+
+            .le-footer-btn-list{
+                min-height:4em;
+                display: -webkit-flex; /* Safari */
+                display: flex;
+                flex-direction:row;
+                justify-content:center;
+
+                .le-footer-btn{
+                    flex-grow:1;
+                    text-align: center;
+                    font-weight:normal;
+                    text-decoration:none;
+                    color:#fff;
+                    display:inline-block;
+                    box-sizing:border-box;
+                    padding:.2em 0;
+
+                    &.focus{
+                        background-color: #0489c1;
+                    }
+
+                    &>.le-footer-btn-icon{
+                        font-family:"iconfont" !important;
+                        font-size:16px;font-style:normal;
+                        -webkit-font-smoothing: antialiased;
+                        -webkit-text-stroke-width: 0.2px;
+                        -moz-osx-font-smoothing: grayscale;
+                        font-size:30px;
+                        font-weight:normal;
+                    }
+                    &>.le-footer-btn-content{
+                        font-size:12px;
+                    }
+                }
+            }
         }
         .le-main-header{
             position:fixed;
@@ -24,7 +69,7 @@
         }
         main.ui-content{
             padding:0;
-            margin:2.8em 0;
+            margin:2.8em 0 4em;
 
             .le-adv-panel{
                 height:300px;
@@ -64,11 +109,17 @@
                 background-color:#eee;
 
                 .panel-title{
-                    text-align:center;
+                    text-align:left;
                     line-height:2em;
                     height:2em;
                     box-sizing:border-box;
                     border-bottom:1px solid #ccc;
+
+                    &>.sub-title{
+                        font-size:12px;
+                        color:#999;
+                        margin-left:1em;
+                    }
                 }
             }
         }
@@ -112,4 +163,7 @@
             }
         }
     }
+}
+.panel-spacing{
+    margin-bottom: 1em;
 }
