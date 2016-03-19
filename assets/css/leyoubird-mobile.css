@@ -15,13 +15,20 @@
   }
   body.leyoubird .le-main-footer .le-footer-btn-list {
     min-height: 4em;
+    display: -webkit-box;
+    display: -moz-box;
     display: -webkit-flex;
-    /* Safari */
     display: flex;
+    -moz-box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    box-orient: horizontal;
     flex-direction: row;
     justify-content: center;
   }
   body.leyoubird .le-main-footer .le-footer-btn-list .le-footer-btn {
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    box-flex: 1;
     flex-grow: 1;
     text-align: center;
     font-weight: normal;
@@ -100,7 +107,7 @@
     background-color: #eee;
   }
   body.leyoubird main.ui-content section.main-panel .panel-title {
-    text-align: left;
+    text-align: center;
     line-height: 2em;
     height: 2em;
     box-sizing: border-box;
@@ -129,23 +136,21 @@
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
+    border: 1px solid #ccc;
+    border-radius: 0.4em;
   }
   body.leyoubird .le-image-info-panel > li.le-items > a > img.le-image {
     width: 100%;
-    height: 100%;
+    height: 200px;
+    vertical-align: bottom;
   }
   body.leyoubird .le-image-info-panel > li.le-items > a > .le-image-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    min-height: 2em;
-    line-height: 2em;
-    background-color: #000;
-    opacity: 0.7;
+    height: 40px;
+    line-height: 38px;
+    background-color: #ddd;
     font-weight: normal;
-    padding: 0.2em 1em;
-    color: #fff;
+    padding: 0 1em;
+    box-sizing: border-box;
   }
   body.leyoubird .le-image-info-panel > li.le-items > a > .le-image-info > span {
     display: block;
