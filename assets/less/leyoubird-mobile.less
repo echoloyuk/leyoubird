@@ -18,6 +18,9 @@
 
             .le-footer-btn-list{
                 min-height:4em;
+                display:table;
+                width:100%;
+                /*
                 display:-webkit-box;
                 display:-moz-box;
                 display:-webkit-flex;
@@ -28,19 +31,25 @@
                 box-orient:horizontal;
                 flex-direction:row;
 
-                justify-content:center;
+                
+                -moz-box-pack:center;
+                -webkit-box-pack:center;
+                -o-box-pack:center;
+                justify-content:center;*/
 
                 .le-footer-btn{
-                    -moz-box-flex:1;
+                    /*-moz-box-flex:1;
                     -webkit-box-flex:1;
                     box-flex:1;
 
                     flex-grow:1;
+                    display:inline-block;*/
+                    display:table-cell;
                     text-align: center;
                     font-weight:normal;
                     text-decoration:none;
                     color:#fff;
-                    display:inline-block;
+                    
                     box-sizing:border-box;
                     padding:.2em 0;
 
