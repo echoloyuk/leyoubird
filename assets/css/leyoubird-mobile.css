@@ -87,6 +87,9 @@
     height: 300px;
     overflow: hidden;
   }
+  body.leyoubird main.ui-content .le-adv-panel.narrow {
+    height: 200px;
+  }
   body.leyoubird main.ui-content .le-adv-panel .img-panel {
     width: 100000px;
     height: 100%;
@@ -133,6 +136,12 @@
     list-style: none;
     margin: 0.8em 0;
     padding: 0;
+  }
+  body.leyoubird .le-image-info-panel.narrow > li.le-items {
+    height: 200px;
+  }
+  body.leyoubird .le-image-info-panel.narrow > li.le-items > a > img.le-image {
+    height: 160px;
   }
   body.leyoubird .le-image-info-panel > li.le-items {
     list-style: none;

@@ -95,6 +95,10 @@
                 height:300px;
                 overflow:hidden;
 
+                &.narrow{
+                    height:200px;
+                }
+
                 .img-panel{
                     width:100000px;
                     height:100%;
@@ -147,6 +151,16 @@
             list-style:none;
             margin:0.8em 0;
             padding:0;
+
+            &.narrow{
+                &>li.le-items{
+                    height:200px;
+
+                    &>a>img.le-image{
+                        height:160px;
+                    }
+                }
+            }
 
             &>li.le-items{
                 list-style:none;
