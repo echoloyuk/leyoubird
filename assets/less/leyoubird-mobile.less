@@ -84,12 +84,26 @@
 
             .home-title{
                 font-size:1em;
-                padding:0 16px;
+                padding:0 16px 0 58px;
+
+                span.logo{
+                    position:absolute;
+                    width:32px;
+                    height:32px;
+                    left:16px;
+                    top:6px;
+                    background:url(../content/logo.png) no-repeat center center;
+                    background-size:100% 100%;
+                }
             }
         }
         main.ui-content{
             padding:0;
             margin:2.8em 0 4em;
+
+            &.without-header{
+                margin-top:0;
+            }
 
             .le-adv-panel{
                 height:300px;
@@ -143,6 +157,24 @@
                         font-size:12px;
                         color:#999;
                         margin-left:1em;
+                    }
+                }
+
+                .le-form{
+                    .le-form-item{
+                        padding-left:30%;
+                        position:relative;
+                        margin:0.8em 0;
+
+                        .le-form-label{
+                            position:absolute;
+                            top:0;
+                            height:2em;
+                            line-height:2em;
+                            left:0;
+                            width:24%;
+                            text-align:right;
+                        }
                     }
                 }
             }
