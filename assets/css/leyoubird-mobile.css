@@ -50,7 +50,7 @@
     padding: .2em 0;
   }
   body.leyoubird .le-main-footer .le-footer-btn-list .le-footer-btn.focus {
-    background-color: #0489c1;
+    background-color: #15828d;
   }
   body.leyoubird .le-main-footer .le-footer-btn-list .le-footer-btn > .le-footer-btn-icon {
     font-family: "iconfont" !important;
@@ -70,23 +70,30 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 1.5em;
-    line-height: 1.5em;
-    padding: 0.6em 0;
+    height: 2.4em;
+    line-height: 2.4em;
+    padding: 0.2em 0;
+    text-align: center;
     z-index: 100;
   }
   body.leyoubird .le-main-header .home-title {
     font-size: 1em;
-    padding: 0 16px 0 58px;
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+  }
+  body.leyoubird .le-main-header .home-title span {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: bottom;
   }
   body.leyoubird .le-main-header .home-title span.logo {
-    position: absolute;
     width: 32px;
     height: 32px;
-    left: 16px;
-    top: 6px;
     background: url(../content/logo.png) no-repeat center center;
     background-size: 100% 100%;
+    margin-right: .5em;
   }
   body.leyoubird main.ui-content {
     padding: 0;
@@ -145,18 +152,27 @@
     margin-left: 1em;
   }
   body.leyoubird main.ui-content section.main-panel .le-form .le-form-item {
-    padding-left: 30%;
+    padding-left: 25%;
     position: relative;
     margin: 0.8em 0;
   }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .ui-field-contain {
+    padding: 0;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .ui-mini {
+    margin: 0;
+  }
   body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-label {
     position: absolute;
-    top: 0;
-    height: 2em;
-    line-height: 2em;
+    top: 0.4em;
+    height: 1.6em;
+    line-height: 1.6em;
     left: 0;
-    width: 24%;
+    width: 23%;
     text-align: right;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-ctrl-panel {
+    margin: 1.4em 0 1em;
   }
   body.leyoubird .le-image-info-panel {
     list-style: none;

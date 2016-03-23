@@ -36,21 +36,31 @@
                     <form action="">
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">目的地</label>
-                            <input class="le-form-input" type="text" data-clear-btn="true" name="dest" id="dest" value="">
+                            <div class="ui-field-contain">
+                                <select name="select-native-2" id="select-native-2" data-mini="true">
+                                    <option value="1">曼谷</option>
+                                    <option value="2">清迈</option>
+                                    <option value="3">普吉岛</option>
+                                    <option value="4">甲米</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">时间</label>
-                            <input class="le-form-input" type="text" data-clear-btn="true" name="dest" id="dest" value="">
+                            <input class="le-form-input" type="date" data-clear-btn="false" name="dest" id="dest" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">人数</label>
-                            <input class="le-form-input" type="text" data-clear-btn="true" name="dest" id="dest" value="">
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">出发地</label>
-                            <input class="le-form-input" type="text" data-clear-btn="true" name="dest" id="dest" value="">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="">
                         </div>
                     </form>
+                </div>
+                <div class="le-ctrl-panel">
+                    <button class="ui-btn ui-corner-all">下一步</button>
                 </div>
             </section>
         </main>
@@ -58,7 +68,7 @@
             <div class="le-footer-btn-list">
                 <a href="index.html"  data-transition="fade" class="le-footer-btn">
                     <div class="le-footer-btn-icon">&#xf015c;</div>
-                    <div class="le-footer-btn-content">热门行程</div>
+                    <div class="le-footer-btn-content">热门推荐</div>
                 </a>
                 <a href="shuttleService.html" data-transition="fade" class="le-footer-btn">
                     <div class="le-footer-btn-icon">&#xe651;</div>
@@ -74,7 +84,7 @@
                 </a>
                 <a href="" class="le-footer-btn">
                     <div class="le-footer-btn-icon">&#xf01d8;</div>
-                    <div class="le-footer-btn-content">我的安排</div>
+                    <div class="le-footer-btn-content">我的行程</div>
                 </a>
             </div>
         </footer>
