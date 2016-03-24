@@ -16,15 +16,20 @@
     <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.structure.min.css">
 
     <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
-    
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.theme.css">
+
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="assets/js/datepicker.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
 
 </head>
 <body class="leyoubird">
     <div data-role="page" id="home">
         <main role="main" class="ui-content without-header">
-            <section class="le-adv-panel narrow">
+            <section class="le-adv-panel narrow customTrip">
             	<div class="img-panel">
             		<div class="img" style="background-image:url(./assets/content/demo11.jpg)">
             			<span class="img-info">定制你的旅行</span>
@@ -37,8 +42,8 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">目的地</label>
                             <div class="ui-field-contain">
-                                <select name="select-native-2" id="select-native-2" data-mini="true">
-                                    <option value="1">曼谷</option>
+                                <select name="select-custom-19" id="select-custom-19" multiple="multiple" data-native-menu="false" data-mini="true">
+                                    <option value="1" selected="selected">曼谷</option>
                                     <option value="2">清迈</option>
                                     <option value="3">普吉岛</option>
                                     <option value="4">甲米</option>
@@ -47,7 +52,11 @@
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">时间</label>
-                            <input class="le-form-input" type="date" data-clear-btn="false" name="dest" id="dest" value="">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="deptDate" value="" data-role="date" readonly="readonly">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">天数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">人数</label>
@@ -89,4 +98,10 @@
             </div>
         </footer>
     </div>
+
+<script type="text/javascript">
+$(function (){
+
+});
+</script>
 </body>
