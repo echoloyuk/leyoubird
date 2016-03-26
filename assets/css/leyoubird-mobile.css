@@ -190,6 +190,26 @@
   body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-grid .le-form-grid-item .ui-input-text {
     margin: 0;
   }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-check {
+    line-height: 1.5em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-check .le-form-check-item {
+    display: inline-block;
+    height: 1.8em;
+    line-height: 1.8em;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: 100px;
+    border: 1px solid #bbb;
+    margin: 0.2em 0.1em;
+    border-radius: 0.4em;
+    background-color: #fff;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-check .le-form-check-item.checked {
+    background-color: #00a3b3;
+    color: #fff;
+    border-color: #00a3b3;
+  }
   body.leyoubird main.ui-content section.main-panel .le-ctrl-panel {
     margin: 1.4em 0 1em;
   }
