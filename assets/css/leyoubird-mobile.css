@@ -1,9 +1,15 @@
 @font-face {
+  font-family: 'iconfont-nav';
+  src: url('../font/iconfont-nav.eot');
+  /* IE9*/
+  src: url('../font/iconfont-nav.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont-nav.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont-nav.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url('../font/iconfont-nav.svg#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+@font-face {
   font-family: 'iconfont';
   src: url('../font/iconfont.eot');
-  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url('../font/iconfont.svg#iconfont') format('svg');
-  
   /* IE9*/
+  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('../font/iconfont.svg#iconfont') format('svg');
   /* iOS 4.1- */
 }
 @media screen and (max-width: 2024px) {
@@ -54,7 +60,7 @@
     background-color: #15828d;
   }
   body.leyoubird .le-main-footer .le-footer-btn-list .le-footer-btn > .le-footer-btn-icon {
-    font-family: "iconfont" !important;
+    font-family: "iconfont-nav" !important;
     font-size: 16px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
@@ -110,6 +116,9 @@
   body.leyoubird main.ui-content .le-adv-panel.narrow {
     height: 240px;
   }
+  body.leyoubird main.ui-content .le-adv-panel.ext-narrow {
+    height: 200px;
+  }
   body.leyoubird main.ui-content .le-adv-panel.customTrip {
     height: 200px;
   }
@@ -140,8 +149,7 @@
     color: #fff;
   }
   body.leyoubird main.ui-content section.main-panel {
-    padding: 0.8em 1em;
-    background-color: #eee;
+    padding: 0.8em 1em 3.2em;
   }
   body.leyoubird main.ui-content section.main-panel .panel-title {
     text-align: center;
@@ -175,8 +183,96 @@
     width: 23%;
     text-align: right;
   }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-grid .le-form-grid-item {
+    display: inline-block;
+    vertical-align: text-top;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-grid .le-form-grid-item .ui-input-text {
+    margin: 0;
+  }
   body.leyoubird main.ui-content section.main-panel .le-ctrl-panel {
     margin: 1.4em 0 1em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu {
+    padding-bottom: 1em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-title {
+    line-height: 2em;
+    height: 2em;
+    padding: 0.2em 0;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-title > .ctrl-icon {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    float: right;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-title > .ctrl-icon:before {
+    content: '\e629';
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-title > .ctrl-icon.down:before {
+    content: '\e629';
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-title > .ctrl-icon.left:before {
+    content: '\e626';
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content {
+    padding: 1em 0;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content p {
+    margin: 0;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .content {
+    margin-left: 20px;
+    line-height: 1.8em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-info {
+    margin: 0.5em 0 0 20px;
+    border-left: 1px solid #ccc;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-info > .content {
+    margin-left: 20px;
+    line-height: 1.8em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-info > .content img {
+    width: 100%;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-title {
+    padding: 0 0 0 40px;
+    position: relative;
+    line-height: 1.6em;
+    font-weight: bold;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-title > .icon {
+    position: absolute;
+    left: 8px;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-title > .icon:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 24px;
+    color: #00a3b3;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-title > .icon.point:before {
+    content: '\e668';
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-title > .icon.paper-plane:before {
+    content: '\e6b2';
   }
   body.leyoubird .le-image-info-panel {
     list-style: none;
