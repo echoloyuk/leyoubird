@@ -213,6 +213,29 @@
   body.leyoubird main.ui-content section.main-panel .le-ctrl-panel {
     margin: 1.4em 0 1em;
   }
+  body.leyoubird main.ui-content section.main-panel .le-price-panel {
+    margin: 1em 0;
+    position: relative;
+    padding-right: 8em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price-title,
+  body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price-copy {
+    height: 2em;
+    line-height: 2em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price-title {
+    border-bottom: 1px solid #ccc;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price {
+    font-size: 32px;
+    font-weight: bold;
+    position: absolute;
+    height: 2em;
+    line-height: 2em;
+    right: 0;
+    top: 0;
+    color: #f0903b;
+  }
   body.leyoubird main.ui-content section.main-panel .le-list-menu {
     padding-bottom: 1em;
   }
@@ -293,6 +316,40 @@
   }
   body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-title > .icon.paper-plane:before {
     content: '\e6b2';
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: normal;
+    position: relative;
+    padding: 1em 0 1em 116px;
+    min-height: 100px;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item:hover {
+    background-color: #fff;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item .product-img {
+    position: absolute;
+    left: 0;
+    top: 1em;
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    background-color: #ccc;
   }
   body.leyoubird .le-image-info-panel {
     list-style: none;

@@ -240,6 +240,30 @@
                 .le-ctrl-panel{
                     margin:1.4em 0 1em;
                 }
+                .le-price-panel{
+                    margin:1em 0;
+                    position:relative;
+                    padding-right:8em;
+
+                    .le-price-title, .le-price-copy{
+                        height:2em;
+                        line-height:2em;
+                    }
+
+                    .le-price-title{
+                        border-bottom:1px solid #ccc;
+                    }
+                    .le-price{
+                        font-size:32px;
+                        font-weight:bold;
+                        position:absolute;
+                        height:2em;
+                        line-height:2em;
+                        right:0;
+                        top:0;
+                        color:#f0903b;
+                    }
+                }
                 .le-list-menu{
                     padding-bottom:1em;
 
@@ -334,6 +358,44 @@
                                         content:'\e6b2';
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+                .le-shuttle-service-list{
+                    list-style:none;
+                    margin:0;
+                    padding:0;
+
+                    &>li{
+                        margin:0;
+                        padding:0;
+                        list-style:none;
+                        border-bottom:1px solid #ccc;
+
+                        a.product-item{
+                            display:block;
+                            text-decoration:none;
+                            color:#333;
+                            font-size:16px;
+                            font-weight:normal;
+                            position:relative;
+                            padding:1em 0 1em 116px;
+                            min-height:100px;
+
+                            &:hover{
+                                background-color:#fff;
+                            }
+
+                            .product-img{
+                                position:absolute;
+                                left:0;
+                                top:1em;
+                                width:100px;
+                                height:100px;
+                                box-sizing:border-box;
+                                border:1px solid #ccc;
+                                background-color:#ccc;
                             }
                         }
                     }

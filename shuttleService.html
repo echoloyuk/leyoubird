@@ -19,7 +19,14 @@
     
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
-
+    
+    <script type="text/javascript">
+    $(function (){
+        $('#list li').on('touchend', function (){
+            window.location.href = '2.1.html';
+        });
+    });
+    </script>
 </head>
 <body class="leyoubird">
     <div data-role="page" id="home">
@@ -41,7 +48,7 @@
             	</div>
             </section>
             <section class="main-panel">
-                <ul class="le-image-info-panel narrow">
+                <ul class="le-image-info-panel narrow" id="list">
                     <li class="le-items">
                         <a href="" class="le-panel">
                             <img src="./assets/content/demo5.jpg" alt="" class="le-image">
