@@ -339,7 +339,7 @@
     min-height: 100px;
   }
   body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item:hover {
-    background-color: #fff;
+    background-color: #eee;
   }
   body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item .product-img {
     position: absolute;
@@ -348,8 +348,18 @@
     width: 100px;
     height: 100px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
     background-color: #ccc;
+    background-size: cover;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item > .title {
+    line-height: 1.6em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-shuttle-service-list > li a.product-item > .price {
+    font-size: 20px;
+    color: #f0903b;
+    position: absolute;
+    right: 0;
+    bottom: 1em;
   }
   body.leyoubird .le-image-info-panel {
     list-style: none;

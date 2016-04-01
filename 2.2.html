@@ -17,39 +17,17 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
     
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.theme.css">
+
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="assets/js/datepicker.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
     
     <script type="text/javascript">
     $(function (){
-        var checkItem = function ($target){
-            var check = function ($obj){
-                $obj.addClass('checked');
-            }
-            var uncheck = function ($obj){
-                $obj.removeClass('checked');
-            }
-            var $items = $('.le-form-check-item', $target);
-            $items.each(function (){
-                var $this = $(this);
-                if ($this.attr('data-le-checked') === 'checked'){
-                    check($this);
-                } else {
-                    uncheck($this);
-                }
-                $this.on('touchend', function (){
-                    var $this = $(this);
-                    if ($this.attr('data-le-checked') === 'checked'){
-                        uncheck($this);
-                        $this.attr('data-le-checked', '');
-                    } else {
-                        check($this);
-                        $this.attr('data-le-checked', 'checked');
-                    }
-                });
-            });
-        };
-        checkItem($('#checkPanel'));
+        $('#date').date();
     });
     </script>
 </head>
@@ -61,29 +39,18 @@
                 <span class="logo"></span>
                 <span>乐游鸟旅行</span>
             </span>
-            <a href="customTrip.html" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+            <a href="2.1.html" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
         </header>
         <main role="main" class="ui-content" style="margin-bottom:0">
             <section class="le-adv-panel ext-narrow">
             	<div class="img-panel">
-            		<div class="img" style="/*background-image:url()*/"></div>
+            		<div class="img" style="background-image:url(./assets/content/demo17.jpg)"></div>
             		<div class="img"></div>
             	</div>
             </section>
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-form">
                     <form action="">
-                        <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">可选服务</label>
-                            <div class="le-form-check" id="checkPanel">
-                                <div class="le-form-check-item" data-le-checked="checked">酒店代订</div>
-                                <div class="le-form-check-item">机票代订</div>
-                                <div class="le-form-check-item">签证办理</div>
-                                <div class="le-form-check-item">导游地接</div>
-                                <div class="le-form-check-item">机场接送</div>
-                                <div class="le-form-check-item">包车服务</div>
-                            </div>
-                        </div>
                         <div class="le-form-item" id="people">
                             <label class="le-form-label" for="text-3">联系人</label>
                             <div class="le-form-grid">
@@ -101,16 +68,24 @@
                             </div>
                         </div>
                         <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">日期</label>
+                            <input class="le-form-input" readonly="readonly" type="text" data-clear-btn="false" name="dest" id="date" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">航班号</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="" placeholder="接送机必填">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">酒店名称</label>
+                            <textarea name="textarea-1" id="textarea-1" placeholder="接送酒店必填"></textarea>
+                        </div>
+                        <div class="le-form-item">
                             <label class="le-form-label" for="text-3">邮箱</label>
                             <input class="le-form-input" type="email" data-clear-btn="false" name="dest" id="dest" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
                             <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
-                        </div>
-                        <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">备注</label>
-                            <textarea name="textarea-1" id="textarea-1" placeholder="选填"></textarea>
                         </div>
                     </form>
                 </div>

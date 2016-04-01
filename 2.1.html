@@ -19,7 +19,14 @@
     
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
-
+	
+	<script type="text/javascript">
+	$(function (){
+		$('#list a.product-item').each(function (){
+			$(this).attr('href', '2.2.html');
+		});
+	});
+	</script>
 </head>
 <body class="leyoubird">
     <div data-role="page" id="home">
@@ -32,11 +39,47 @@
         </header>
         <main role="main" class="ui-content">
             <section class="main-panel">
-                <ul class="le-shuttle-service-list">
+                <ul class="le-shuttle-service-list" id="list">
                     <li>
                         <a href="" class="product-item">
-                            <div class="product-img" style="url(./assets/content/demo1.jpg)"></div>
-                            <div class="title">接送服务名称</div>
+                            <div class="product-img" style="background-image:url(./assets/content/demo13.jpg)"></div>
+                            <div class="title">接送服务名称1, 海外N日游</div>
+                            <div class="price">￥1230</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="product-item">
+                            <div class="product-img" style="background-image:url(./assets/content/demo14.jpg)"></div>
+                            <div class="title">接送服务名称2, 海外N日游</div>
+                            <div class="price">￥830</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="product-item">
+                            <div class="product-img" style="background-image:url(./assets/content/demo15.jpg)"></div>
+                            <div class="title">接送服务名称3, 海外N日游</div>
+                            <div class="price">￥1430</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="product-item">
+                            <div class="product-img" style="background-image:url(./assets/content/demo16.jpg)"></div>
+                            <div class="title">接送服务名称4, 海外N日游</div>
+                            <div class="price">￥230</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="product-item">
+                            <div class="product-img" style="background-image:url(./assets/content/demo13.jpg)"></div>
+                            <div class="title">接送服务名称1, 海外N日游</div>
+                            <div class="price">￥123</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="product-item">
+                            <div class="product-img" style="background-image:url(./assets/content/demo14.jpg)"></div>
+                            <div class="title">接送服务名称2, 海外N日游</div>
+                            <div class="price">￥5430</div>
                         </a>
                     </li>
                 </ul>
