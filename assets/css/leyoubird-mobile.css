@@ -221,6 +221,22 @@
   body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-grid .le-form-grid-item .ui-input-text {
     margin: 0;
   }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-msgcode-btn {
+    width: 100%;
+    text-align: center;
+    height: 2.2em;
+    line-height: 2.2em;
+    border: 1px solid #ddd;
+    border-radius: 0.4em;
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-msgcode-btn.disabled {
+    background-color: #ddd;
+    border-color: #ddd;
+    color: #999;
+  }
   body.leyoubird main.ui-content section.main-panel .le-form .le-form-item .le-form-check {
     line-height: 1.5em;
   }

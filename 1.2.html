@@ -24,17 +24,16 @@
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
     <script type="text/javascript" src="assets/js/datepicker.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
+
+    <script type="text/javascript" src="assets/js/util.js"></script>
     
     <script type="text/javascript">
     $(function (){
         $('#deptDate').date();
+
+        window.bindMsgCodeBtn($('#msgBtn'));
     });
     </script>
-    <style>
-    #people .{
-
-    }
-    </style>
 </head>
 <body class="leyoubird">
     <div data-role="page" id="le1_2">
@@ -47,13 +46,7 @@
             <a href="1.1.html" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
         </header>
         <main role="main" class="ui-content" style="margin-bottom:0">
-            <section class="le-adv-panel ext-narrow">
-            	<div class="img-panel">
-            		<div class="img" style="/*background-image:url()*/"></div>
-            		<div class="img"></div>
-            	</div>
-            </section>
-            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em; margin-top:3em;">
                 <div class="le-form">
                     <form action="">
                         <div class="le-form-item" id="people">
@@ -87,6 +80,14 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
                             <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item" style="width:100px">
+                                    <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="" placeholder="验证码">
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <div class="le-msgcode-btn" data-ajax="false" id="msgBtn">获取验证码</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">备注</label>
