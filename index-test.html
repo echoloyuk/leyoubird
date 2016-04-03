@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>乐游鸟1.0</title>
+    <meta name="description" content="leyoubird" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <link rel="shortcut icon" href="">
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/leyoubird.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.structure.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.theme.css">
+
+    <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="assets/js/datepicker.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
+
+    <script type="text/javascript" src="assets/js/handlebars.js"></script>
+    
+    <script type="text/javascript">
+    $(function (){
+        var context = {
+        	destItems:[
+        		{name:'北京',value:'PEK'},
+        		{name:'上海',value:'SHA'},
+        		{name:'广州',value:'CAN'},
+        		{name:'成都',value:'CTU'},
+        		{name:'库尔勒',value:'KLR'},
+        	],
+        	advInfo:'testing'
+        }
+        var source = $('#entry-template').html();
+        var template = Handlebars.compile(source);
+        var html = template(context);
+
+       	$('#home').empty().append(html).trigger('create');
+
+    });
+    </script>
+</head>
+<body class="leyoubird" id="test">
+	<div data-role="page" id="home">
+		
+	</div>
+	<script id="entry-template" type="text/x-handlebars-template">
+    	
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content">
+            <section class="le-adv-panel narrow customTrip">
+            	<div class="img-panel">
+            		<div class="img" style="background-image:url(./assets/content/demo11.jpg)">
+            			<span class="img-info">{{advInfo}}</span>
+            		</div>
+            	</div>
+            </section>
+            <section class="main-panel">
+                <div class="le-form">
+                    <form action="">
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">目的地</label>
+                            <div class="ui-field-contain">
+                                <select name="select-custom-19" id="select-custom-19" multiple="multiple" data-native-menu="false" data-mini="true">
+                                	{{#each destItems}}
+                                    <option value="{{value}}">{{name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">时间</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="deptDate" value="" data-role="date" readonly="readonly">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">天数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">人数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">出发地</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="">
+                        </div>
+                    </form>
+                </div>
+                <div class="le-ctrl-panel">
+                    <a href="3.1.html" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
+                </div>
+            </section>
+        </main>
+        <footer data-role="footer" class="le-main-footer">
+            <div class="le-footer-btn-list">
+                <a href="" data-ajax="false" class="le-footer-btn focus">
+                    <div class="le-footer-btn-icon">&#xf015c;</div>
+                    <div class="le-footer-btn-content">热门推荐</div>
+                </a>
+                <a href="shuttleService.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xe651;</div>
+                    <div class="le-footer-btn-content">接送服务</div>
+                </a>
+                <a href="customTrip.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xf0126;</div>
+                    <div class="le-footer-btn-content">定制旅行</div>
+                </a>
+                <a href="deepenExperience.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xe64f;</div>
+                    <div class="le-footer-btn-content">深度体验</div>
+                </a>
+                <a href="" class="le-footer-btn" data-ajax="false">
+                    <div class="le-footer-btn-icon">&#xf01d8;</div>
+                    <div class="le-footer-btn-content">我的行程</div>
+                </a>
+            </div>
+        </footer>
+    </script>
+</body>
