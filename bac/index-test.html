@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>乐游鸟</title>
+    <title>乐游鸟1.0</title>
     <meta name="description" content="leyoubird" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -24,21 +24,56 @@
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
     <script type="text/javascript" src="assets/js/datepicker.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
+
+    <script type="text/javascript" src="assets/js/handlebars.js"></script>
     
     <script type="text/javascript">
     $(function (){
-        $('#deptDate').date();
+        var onSuccess = function (data){
+            var source = $('#entry-template').html();
+            var template = Handlebars.compile(source);
+            var html = template(data);
+
+            $('#home').empty().append(html).trigger('create');
+        }
+
+        var data = {
+        	destItems:[
+        		{name:'北京',value:'PEK'},
+        		{name:'上海',value:'SHA'},
+        		{name:'广州',value:'CAN'},
+        		{name:'成都',value:'CTU'},
+        		{name:'库尔勒',value:'KLR'},
+        	],
+        	advInfo:'testing'
+        }
+        
+
+       	setTimeout(function (){
+            onSuccess(data);
+        }, 3000);
+
     });
     </script>
-
 </head>
-<body class="leyoubird">
-    <div data-role="page" id="home">
-        <main role="main" class="ui-content without-header">
+<body class="leyoubird" id="test">
+	<div data-role="page" id="home">
+		<div class="le-loading">Loading...</div>
+	</div>
+	<script id="entry-template" type="text/x-handlebars-template">
+    	
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content">
             <section class="le-adv-panel narrow customTrip">
             	<div class="img-panel">
             		<div class="img" style="background-image:url(./assets/content/demo11.jpg)">
-            			<span class="img-info">定制你的旅行</span>
+            			<span class="img-info">{{advInfo}}</span>
             		</div>
             	</div>
             </section>
@@ -49,15 +84,14 @@
                             <label class="le-form-label" for="text-3">目的地</label>
                             <div class="ui-field-contain">
                                 <select name="select-custom-19" id="select-custom-19" multiple="multiple" data-native-menu="false" data-mini="true">
-                                    <option value="1" selected="selected">曼谷</option>
-                                    <option value="2">清迈</option>
-                                    <option value="3">普吉岛</option>
-                                    <option value="4">甲米</option>
+                                	{{#each destItems}}
+                                    <option value="{{value}}">{{name}}</option>
+                                    {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">日期</label>
+                            <label class="le-form-label" for="text-3">时间</label>
                             <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="deptDate" value="" data-role="date" readonly="readonly">
                         </div>
                         <div class="le-form-item">
@@ -81,7 +115,7 @@
         </main>
         <footer data-role="footer" class="le-main-footer">
             <div class="le-footer-btn-list">
-                <a href="index.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                <a href="" data-ajax="false" class="le-footer-btn focus">
                     <div class="le-footer-btn-icon">&#xf015c;</div>
                     <div class="le-footer-btn-content">热门推荐</div>
                 </a>
@@ -89,7 +123,7 @@
                     <div class="le-footer-btn-icon">&#xe651;</div>
                     <div class="le-footer-btn-content">接送服务</div>
                 </a>
-                <a class="le-footer-btn focus" data-ajax="false">
+                <a href="customTrip.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
                     <div class="le-footer-btn-icon">&#xf0126;</div>
                     <div class="le-footer-btn-content">定制旅行</div>
                 </a>
@@ -103,5 +137,5 @@
                 </a>
             </div>
         </footer>
-    </div>
+    </script>
 </body>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>乐游鸟1.0</title>
+    <meta name="description" content="leyoubird" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <link rel="shortcut icon" href="">
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/leyoubird.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.structure.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
+    
+    <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    
+    <script type="text/javascript">
+    $(function (){
+
+        var listFun = function ($target){
+            var $items = $target.find('.le-list-item');
+            $items.each(function (){
+                var $this = $(this);
+                var isShow = ($this.attr('data-le-open') ? true : false);
+                var $title = $('.le-list-title', $this);
+                var $content = $('.le-list-content', $this);
+                if (!isShow){
+                    $content.hide();
+                    $title.find('.ctrl-icon').removeClass('down left').addClass('left');
+                    $this.attr('data-le-hasOpen', 'false');
+                } else {
+                    $title.find('.ctrl-icon').removeClass('down left').addClass('down');
+                    $this.attr('data-le-hasOpen', 'true');
+                }
+
+                $title.on('click', function (){
+                    var hasOpen = $this.attr('data-le-hasOpen')
+
+                    if (hasOpen !== 'false'){ //close
+                        $content.stop().slideUp(300);
+                        $title.find('.ctrl-icon').removeClass('down left').addClass('left');
+                        $this.attr('data-le-hasOpen', 'false');
+                    } else { //open
+                        $content.stop().slideDown(300);
+                        $title.find('.ctrl-icon').removeClass('down left').addClass('down');
+                        $this.attr('data-le-hasOpen', 'ture');
+                    }
+                    
+                });
+            });
+        }
+        listFun($('#list'));
+    });
+    </script>
+</head>
+<body class="leyoubird">
+    <div data-role="page" id="le1_1">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a href="deepenExperience.html" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="le-adv-panel ext-narrow">
+            	<div class="img-panel">
+            		<div class="img" style="background-image:url(./assets/content/demo18.jpg)"></div>
+            		<div class="img"></div>
+            	</div>
+            </section>
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
+            	<div class="le-price-panel">
+            		<div class="le-price-title">产品名称</div>
+            		<div class="le-price-copy">合作伙伴</div>
+            		<div class="le-price">￥2000</div>
+            	</div>
+                <div class="le-list-menu" id="list">
+                    <div class="le-list-item" data-le-open="true">
+                        <div class="le-list-title">
+                            <span class="title">产品详情</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="le-list-product-title">
+                                <span class="icon point"></span>
+                                <span>Day1</span>
+                            </div>
+                            <div class="le-list-product-info">
+                                <div class="content">
+                                    <p>这是一段测试的介绍文字<br>这是一段测试的介绍文字</p>
+                                    <img src="assets/content/demo12.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="le-list-product-title">
+                                <span class="icon paper-plane"></span>
+                                <span>Day2</span>
+                            </div>
+                            <div class="le-list-product-info">
+                                <div class="content">
+                                    <p>这是一段测试的介绍文字<br>这是一段测试的介绍文字</p>
+                                    <img src="assets/content/demo12.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">费用说明</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>这是一个说明</p>
+                                <p>费用说明价格：￥1233</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">预定须知</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>这是一个预定须知</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">其他注意事项</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>这里是其他注意事项</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
+            </section>
+        </main>
+    </div>
+
+
+</body>

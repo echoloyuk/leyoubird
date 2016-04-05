@@ -40,6 +40,18 @@
         selectList($('#accom'));
         selectList($('#accomType'));
         selectList($('#trans'));
+
+        $('#hotel').on('click', function (){
+            if ($(this).hasClass('checked')){
+                $('#accomType').show();
+            }
+        });
+        $('#house').on('click', function (){
+            if ($(this).hasClass('checked')){
+                $('#accomType').hide();
+                $('#accomType .select-btn').removeClass('checked');
+            }
+        });
     })
     
     </script>
@@ -57,7 +69,7 @@
         <main role="main" class="ui-content" style="margin-bottom:0">
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-items-select">
-                    <div class="select-title">服务类型</div>
+                    <div class="select-title">航班偏好</div>
                     <div class="select-items" id="fltPref">
                         <div class="select-grid">
                             <div class="select-btn">直飞</div>
@@ -66,25 +78,33 @@
                             <div class="select-btn">中转</div>
                         </div>
                     </div>
-                    <div class="select-title">车型要求</div>
+                    <div class="select-title">住宿类型</div>
                     <div class="select-items" id="accom" style="margin-bottom:0.4em;">
                         <div class="select-grid">
-                            <div class="select-btn" id="hotel">品质</div>
+                            <div class="select-btn" id="hotel">度假酒店</div>
                         </div>
                         <div class="select-grid">
-                            <div class="select-btn" id="house">豪华</div>
+                            <div class="select-btn" id="house">特色民宿</div>
                         </div>
                     </div>
-                    <div class="select-title">车型标注</div>
+                    <div class="select-items" id="accomType" style="display:none;">
+                        <div class="select-grid">
+                            <div class="select-btn">三星经济</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn">四星品质</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn">五星豪华</div>
+                        </div>
+                    </div>
+                    <div class="select-title">交通方式</div>
                     <div class="select-items" id="trans">
-                        <div class="select-grid" style="width:33%">
-                            <div class="select-btn">5座</div>
+                        <div class="select-grid" style="width:50%">
+                            <div class="select-btn">包车</div>
                         </div>
-                        <div class="select-grid" style="width:33%">
-                            <div class="select-btn">7座</div>
-                        </div>
-                        <div class="select-grid" style="width:33%">
-                            <div class="select-btn">12座</div>
+                        <div class="select-grid">
+                            <div class="select-btn">公共交通</div>
                         </div>
                     </div>
                 </div>

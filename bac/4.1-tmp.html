@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>乐游鸟</title>
+    <meta name="description" content="leyoubird" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <link rel="shortcut icon" href="">
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/leyoubird.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.structure.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
+    
+    <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    
+    <script type="text/javascript">
+	$(function (){
+        var tmp = '<div class="le-form-item">' +
+                    '<label class="le-form-label" for="text-3">目的地</label>' +
+                    '<div class="ui-field-contain">' +
+                        '<select name="select-custom-19" id="select-custom-19" multiple="multiple" data-native-menu="false" data-mini="true">' +
+                            '<option value="1" selected="selected">曼谷</option>' +
+                            '<option value="2">清迈</option>' +
+                            '<option value="3">普吉岛</option>' +
+                            '<option value="4">甲米</option>' +
+                        '</select>' +
+                    '</div>' +
+                '</div>';
+        $('#home').append(tmp);
+        $('#home').trigger('create');
+	});
+	</script>
+</head>
+<body class="leyoubird">
+    <div data-role="page" id="home" data-cache="false">
+        
+    </div>
+</body>
