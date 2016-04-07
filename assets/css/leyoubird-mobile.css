@@ -301,10 +301,12 @@
     right: 0;
     top: 0;
     color: #f0903b;
+    vertical-align: baseline;
   }
   body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price .qi,
   body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price .money {
     font-size: 16px;
+    vertical-align: baseline;
   }
   body.leyoubird main.ui-content section.main-panel .le-list-menu {
     padding-bottom: 1em;
