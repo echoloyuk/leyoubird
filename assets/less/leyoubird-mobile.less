@@ -296,15 +296,35 @@
                 .le-price-panel{
                     margin:1em 0;
                     position:relative;
-                    padding-right:8em;
+                    padding-right:8.5em;
 
-                    .le-price-title, .le-price-copy{
-                        height:2em;
-                        line-height:2em;
+					.le-price-copy,.le-price-title{
+						min-height: 2em;
+					}
+                    .le-price-copy{
+                    	line-height:2em;
+                    	.tag{
+                    		background-color:#86e1ea;
+                    		padding:0 4px;
+                    		border-radius:0.4em;
+                    		margin:0 0.1em 0 0;
+                    		line-height:1em;
+                    		height:1em;
+                    		font-size:14px;
+
+                    		&:nth-child(3n+1){
+								background-color:#eabe86;
+                    		}
+                    		&:nth-child(3n+2){
+                    			background-color:#b3ea86;
+                    		}
+                    	}
                     }
 
                     .le-price-title{
                         border-bottom:1px solid #ccc;
+                        line-height:2em;
+                        word-break:break-all;
                     }
                     .le-price{
                         font-size:32px;
@@ -315,6 +335,10 @@
                         right:0;
                         top:0;
                         color:#f0903b;
+
+                        .qi, .money{
+                        	font-size:16px;
+                        }
                     }
                 }
                 .le-list-menu{
