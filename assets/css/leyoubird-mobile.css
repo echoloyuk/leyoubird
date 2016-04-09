@@ -288,7 +288,6 @@
     background-color: #b3ea86;
   }
   body.leyoubird main.ui-content section.main-panel .le-price-panel .le-price-title {
-    border-bottom: 1px solid #ccc;
     line-height: 2em;
     word-break: break-all;
   }
@@ -296,8 +295,6 @@
     font-size: 32px;
     font-weight: bold;
     position: absolute;
-    height: 2em;
-    line-height: 2em;
     right: 0;
     top: 0;
     color: #f0903b;

@@ -36,10 +36,19 @@
                 }
             });
         };
-        selectList($('#fltPref'));
-        selectList($('#accom'));
-        selectList($('#accomType'));
-        selectList($('#trans'));
+        selectList($('#servType'));
+        selectList($('#carType'));
+        selectList($('#carSym'));
+
+        $('.select-btn').on('click', function (){
+            var $this = $(this);
+            document.cookie = 'type=;expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            if ($this.html() === '机场接送'){
+                document.cookie = 'type=2.3';
+            } else {
+                document.cookie = 'type=2.4';
+            }
+        });
     })
     
     </script>
@@ -57,8 +66,8 @@
         <main role="main" class="ui-content" style="margin-bottom:0">
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-items-select">
-                    <div class="select-title">服务类型</div>
-                    <div class="select-items" id="fltPref">
+                    <div class="select-title">服务类型2</div>
+                    <div class="select-items" id="servType">
                         <div class="select-grid">
                             <div class="select-btn">机场接送</div>
                         </div>
@@ -67,7 +76,7 @@
                         </div>
                     </div>
                     <div class="select-title">车型要求</div>
-                    <div class="select-items" id="accom" style="margin-bottom:0.4em;">
+                    <div class="select-items" id="carType" style="margin-bottom:0.4em;">
                         <div class="select-grid">
                             <div class="select-btn" id="hotel">品质</div>
                         </div>
@@ -76,7 +85,7 @@
                         </div>
                     </div>
                     <div class="select-title">车型标注</div>
-                    <div class="select-items" id="trans">
+                    <div class="select-items" id="carSym">
                         <div class="select-grid" style="width:33%">
                             <div class="select-btn">5座</div>
                         </div>
