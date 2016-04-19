@@ -2,6 +2,72 @@
     var Leyoubird = function ($target){
 
         this.$target = $target;
+        this.requestList = {
+            'id' : {
+                url: '',
+                type:'get',
+                data: function (){ // including beforeData
+                    return {} || false;
+                },
+                onFinish: function (){
+
+                }
+            }
+        },
+
+        this.toPage = function (id){
+            if (!this.requestList[id]){
+                console.log('id error');
+                return;
+            }
+            var cur = this.requestList[id];
+            var url = cur.url;
+            var type = cur.type;
+            var data;
+            var _this = this;
+            if (typeof cur.data === 'function'){
+                data = cur.data.call();
+            } else if (typeof cur.data === 'object'){
+                data = cur.data;
+            } else {
+                data = false;
+            }
+            if (!data){
+                return;
+            }
+            
+            _this.$target.empty()
+            this.showLoading();
+
+            //ajax
+
+            setTimeout(function (){
+
+                var source = $('#' + id).html();
+                var template = Handlebars.compile(source);
+                var html = template({});
+
+                _this.hideLoading();
+
+                _this.$target.empty().append(html).trigger('create');
+
+                if (typeof cur.onFinish === 'function'){
+                    cur.onFinish.call();
+                }
+            }, 2000);
+        }
+
+        //显示读取
+        this.showLoading = function (){
+            var $loading = $('#leLoading');
+            $loading.show();
+        },
+
+        //隐藏读取
+        this.hideLoading = function (){
+            var $loading = $('#leLoading');
+            $loading.hide();
+        }
 
         //下一页
         this.changePage = function (id, url, data, callback){
