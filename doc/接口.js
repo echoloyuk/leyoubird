@@ -65,26 +65,9 @@
             ]
         },
     },
-    fareDetail: {
-        list: [
-            'xxxx', //第一个价格段落
-            'xxxx', //第二个价格段落
-            ...
-        ]
-    },
-    noticeDetail: {
-        list: [
-            'yyy', //第一个须知段落
-            'yyy',
-            ...
-        ]
-    },
-    otherDetail: {
-        list: [
-            'zzz',
-            'zzz'
-        ]
-    }
+    fareDetail: 'xxx', //费用说明
+    noticeDetail: 'yyy',
+    otherDetail: 'zzz'
 }
 
 //图2
