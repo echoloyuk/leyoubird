@@ -105,8 +105,21 @@
                     $('#back').on('click', function (){
                         le.toPage('t1_1');
                     });
+                    $('#submit').on('click', function (){
+                        le.toPage('t1_3');
+                    });
                 }
-            },
+            }, 
+            't1_3': {
+                url:'',
+                type: 'get',
+                data: function (){
+                    return {};
+                },
+                onFinish: function (){
+
+                }
+            }
         }
         le.toPage('t1');
     });
@@ -361,7 +374,34 @@
                         </div>
                     </form>
                 </div>
-                <a data-ajax="false" href="1.3.html" class="ui-btn ui-corner-all">提交</a>
+                <a data-ajax="false" class="ui-btn ui-corner-all" id="submit">提交</a>
+            </section>
+        </main>
+    </script>
+    <script id="t1_3" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;margin-top:3em;">
+                <div class="success-panel">
+                    <div class="success-title">
+                        <span class="icon">&#xf00e1;</span>
+                        <span>提交成功</span>
+                    </div>
+                    <div class="success-content">
+                        <p>乐游鸟已了解您的需求</p>
+                        <p>旅行顾问将24小时内通过电话联系您</p>
+                        <p style="margin-top:1em;">感谢您使用乐游鸟旅行</p>
+                    </div>
+                </div>
+            </section>
+            <section class="success-confirm-btn-panel">
+                <a data-ajax="false" href="index.html" class="ui-btn ui-corner-all">返回首页</a>
             </section>
         </main>
     </script>
