@@ -34,10 +34,11 @@
         var le = new Leyoubird($('#home'));
         le.requestList = {
             't1': {
-                url:'',
+                url:'http://123.56.194.182:8080/swagger-ui.html#!/travel-api/findUsingGET_2',
                 type:'get',
-                data: function (){
-                    return {};
+                data: {
+                    category:'travel',
+                    step:'1.1'
                 },
                 onFinish: function (){
                     $('#list a').on('click', function (){

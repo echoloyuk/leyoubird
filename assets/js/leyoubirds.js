@@ -36,13 +36,11 @@
                 return;
             }
             
-            _this.$target.empty()
+            _this.$target.empty();
             this.showLoading();
 
-            //ajax
-
-            setTimeout(function (){
-
+            //ajax on finish
+            var onFinish = function (){
                 var source = $('#' + id).html();
                 var template = Handlebars.compile(source);
                 var html = template({});
@@ -54,7 +52,22 @@
                 if (typeof cur.onFinish === 'function'){
                     cur.onFinish.call();
                 }
-            }, 2000);
+            }
+
+            
+            if (!url){
+                onFinish();
+            } else {
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: data,
+                    success: function (res){
+                        onFinish();
+                    }
+                });
+            }
+            
         }
 
         //显示读取
