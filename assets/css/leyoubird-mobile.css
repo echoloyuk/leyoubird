@@ -112,6 +112,7 @@
   body.leyoubird main.ui-content .le-adv-panel {
     height: 300px;
     overflow: hidden;
+    position: relative;
   }
   body.leyoubird main.ui-content .le-adv-panel.narrow {
     height: 240px;
@@ -126,6 +127,7 @@
     width: 100000px;
     height: 100%;
     box-sizing: border-box;
+    position: relative;
   }
   body.leyoubird main.ui-content .le-adv-panel .img-panel .img {
     width: 420px;

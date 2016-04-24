@@ -40,10 +40,11 @@
             this.showLoading();
 
             //ajax on finish
-            var onFinish = function (){
+            var onFinish = function (data){
                 var source = $('#' + id).html();
                 var template = Handlebars.compile(source);
-                var html = template({});
+                data = data || {title:'machi'};
+                var html = template(data);
 
                 _this.hideLoading();
 

@@ -19,11 +19,14 @@
 
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/util.js"></script>
     
     <script type="text/javascript">
     $(function (){
         var tmp = ''
 
+        bingAdvScroller($('#adv'));
         
     });
     </script>
@@ -38,9 +41,12 @@
             </span>
         </header>
         <main role="main" class="ui-content">
-            <section class="le-adv-panel">
+            <section class="le-adv-panel" id="adv">
                 <div class="img-panel">
                     <div class="img" style="/*background-image:url()*/">
+                        <span class="img-info">广告信息</span>
+                    </div>
+                    <div class="img">
                         <span class="img-info">广告信息</span>
                     </div>
                     <div class="img">
