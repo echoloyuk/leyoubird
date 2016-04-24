@@ -11,7 +11,8 @@
                 },
                 onFinish: function (){
 
-                }
+                },
+                formData:{}
             }
         },
 
@@ -43,7 +44,7 @@
             var onFinish = function (data){
                 var source = $('#' + id).html();
                 var template = Handlebars.compile(source);
-                data = data || {title:'machi'};
+                data = $.extend({}, data, (this.formData || {}), {title:'machi'});
                 var html = template(data);
 
                 _this.hideLoading();

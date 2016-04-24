@@ -44,6 +44,8 @@
                     $('#list a').on('click', function (){
                         le.toPage('t1_1');
                     });
+
+                    window.bingAdvScroller($('#adv'));
                 }
             },
             't1_1': {
@@ -109,6 +111,8 @@
                     $('#submit').on('click', function (){
                         le.toPage('t1_3');
                     });
+
+                    $('#deptDate').focus();
                 }
             }, 
             't1_3': {
@@ -137,7 +141,7 @@
             </span>
         </header>
         <main role="main" class="ui-content">
-            <section class="le-adv-panel">
+            <section class="le-adv-panel" id="adv">
                 <div class="img-panel">
                     <div class="img" style="/*background-image:url()*/">
                         <span class="img-info">广告信息</span>
@@ -334,9 +338,9 @@
                             <div class="le-form-grid">
                                 <div class="le-form-grid-item">
                                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+                                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="1" checked="checked">
                                         <label for="radio-choice-h-2a">先生</label>
-                                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+                                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" checked="checked" value="2">
                                         <label for="radio-choice-h-2b">女士</label>
                                     </fieldset>
                                 </div>

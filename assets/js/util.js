@@ -26,6 +26,8 @@
         });
     };
 
+    var advTimmer;
+
     window.bingAdvScroller = function ($target){
         var screenWidth = $(window).width();
         var $imgs = $target.find('.img-panel .img');
@@ -48,8 +50,11 @@
             console.log('change adv image');
         }
 
-        var timmer = setInterval(onScroll, 5000);
+        advTimmer = setInterval(onScroll, 3000);
 
         //onScroll();
     };
+    window.clearAdvTimmer = function (){
+        clearInterval(advTimmer);
+    }
 })(window, $);
