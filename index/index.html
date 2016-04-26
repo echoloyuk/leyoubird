@@ -55,6 +55,7 @@
                     return {};
                 },
                 onFinish: function (){
+                    window.clearAdvTimmer();
                     var listFun = function ($target){
                         var $items = $target.find('.le-list-item');
                         $items.each(function (){
@@ -111,8 +112,6 @@
                     $('#submit').on('click', function (){
                         le.toPage('t1_3');
                     });
-
-                    $('#deptDate').focus();
                 }
             }, 
             't1_3': {
