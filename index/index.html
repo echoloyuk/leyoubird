@@ -30,18 +30,25 @@
     <script type="text/javascript" src="../assets/js/leyoubirds.js"></script>
     
     <script type="text/javascript">
+    window.formData = {
+        productId:null
+    };
     $(function (){
         var le = new Leyoubird($('#home'));
         le.requestList = {
             't1': {
-                url:'',
+                url:'http://123.56.194.182:8080/api/summary',
                 type:'get',
                 data: {
-                    category:'travel',
-                    step:'1.1'
+                    category:'recommend',
+                    step:'1'
                 },
                 onFinish: function (){
                     $('#list a').on('click', function (){
+                        var $this = $(this);
+                        var id = $this.attr('le-id');
+                        window.formData.productId = id;
+
                         le.toPage('t1_1');
                     });
 
@@ -49,10 +56,14 @@
                 }
             },
             't1_1': {
-                url:'',
+                url:'http://123.56.194.182:8080/api/travel',
                 type:'get',
                 data: function (){
-                    return {};
+                    return {
+                        category:'recommend',
+                        step:1,
+                        productId: 1 //window.formData.productId
+                    }
                 },
                 onFinish: function (){
                     window.clearAdvTimmer();
@@ -136,18 +147,17 @@
         <header data-role="header" class="le-main-header">
             <span class="home-title">
                 <span class="logo"></span>
-                <span>{{title}}</span>
+                <span>乐游鸟旅行</span>
             </span>
         </header>
         <main role="main" class="ui-content">
             <section class="le-adv-panel" id="adv">
                 <div class="img-panel">
-                    <div class="img" style="/*background-image:url()*/">
-                        <span class="img-info">广告信息</span>
+                    {{#each adv}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
                     </div>
-                    <div class="img">
-                        <span class="img-info">广告信息</span>
-                    </div>
+                    {{/each}}
                 </div>
             </section>
             <section class="main-panel">
@@ -155,46 +165,16 @@
                     <span>热门行程 特色设计 自由出行</span>
                 </div>
                 <ul class="le-image-info-panel" id="list">
+                    {{#each summarys}}
                     <li class="le-items">
-                        <a data-ajax="false" data-transition="fade" class="le-panel">
-                            <img src="./assets/content/demo2.jpg" alt="" class="le-image">
+                        <a data-ajax="false" le-id="{{id}}" data-transition="fade" class="le-panel">
+                            <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
-                                <span>产品名称1</span>
+                                <span>{{imageTitle}}</span>
                             </div>
                         </a>
                     </li>
-                    <li class="le-items">
-                        <a data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo3.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo2.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称3</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo3.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称4</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo2.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称5</span>
-                            </div>
-                        </a>
-                    </li>
+                    {{/each}}
                 </ul>
             </section>
         </main>
@@ -236,19 +216,25 @@
         <main role="main" class="ui-content" style="margin-bottom:0">
             <section class="le-adv-panel ext-narrow">
                 <div class="img-panel">
-                    <div class="img" style="background-image:url(./assets/content/demo20.jpg)"></div>
-                    <div class="img"></div>
+                    {{#each adv}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
                 </div>
             </section>
+            {{#with product}}
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-price-panel">
-                    <div class="le-price-title">产品名称12345</div>
+                    <div class="le-price-title">{{name}}</div>
                     <div class="le-price-copy">
                         <span class="tag">直飞</span>
                         <span class="tag">高星</span>
                         <span class="tag">高星酒店</span>
                     </div>
-                    <div class="le-price"><span class="money">￥</span>20000<span class="qi">起</span></div>
+                    {{#with price}}
+                    <div class="le-price"><span class="money">￥</span>{{money}}<span class="qi">{{#if showQi}}起{{/if}}</span></div>
+                    {{/with}}
                 </div>
                 <div class="le-list-menu" id="list">
                     <div class="le-list-item" data-le-open="true">
@@ -257,26 +243,18 @@
                             <span class="ctrl-icon"></span>
                         </div>
                         <div class="le-list-content">
+                            {{#each productDetails}}
                             <div class="le-list-product-title">
                                 <span class="icon point"></span>
-                                <span>Day1</span>
+                                <span>{{title}}</span>
                             </div>
                             <div class="le-list-product-info">
                                 <div class="content">
-                                    <p>这是一段测试的介绍文字<br>这是一段测试的介绍文字</p>
-                                    <img src="assets/content/demo12.jpg" alt="">
+                                    <p>{{content}}</p>
+                                    <img src="{{imageUrl}}" alt="">
                                 </div>
                             </div>
-                            <div class="le-list-product-title">
-                                <span class="icon paper-plane"></span>
-                                <span>Day2</span>
-                            </div>
-                            <div class="le-list-product-info">
-                                <div class="content">
-                                    <p>这是一段测试的介绍文字<br>这是一段测试的介绍文字</p>
-                                    <img src="assets/content/demo12.jpg" alt="">
-                                </div>
-                            </div>
+                            {{/each}}
                         </div>
                     </div>
                     <div class="le-list-item">
@@ -316,6 +294,7 @@
                 </div>
                 <a id="next" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
             </section>
+            {{/with}}
         </main>
     </script>
 

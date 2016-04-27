@@ -6,6 +6,7 @@
             'id' : {
                 url: '',
                 type:'get',
+                dataType:'json',
                 data: function (){ // including beforeData
                     return {} || false;
                 },
@@ -44,7 +45,7 @@
             var onFinish = function (data){
                 var source = $('#' + id).html();
                 var template = Handlebars.compile(source);
-                data = $.extend({}, data, (this.formData || {}), {title:'machi'});
+                data = $.extend({}, data, (this.formData || {}));
                 var html = template(data);
 
                 _this.hideLoading();
@@ -65,7 +66,10 @@
                     type: type,
                     data: data,
                     success: function (res){
-                        onFinish();
+                        if (typeof res === 'string'){
+                            res = eval('(' + res + ')');
+                        }
+                        onFinish(res);
                     }
                 });
             }
