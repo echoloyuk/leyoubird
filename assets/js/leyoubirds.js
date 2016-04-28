@@ -13,6 +13,9 @@
                 onFinish: function (){
 
                 },
+                beforeData: function (){
+
+                },
                 formData:{}
             }
         },
@@ -25,6 +28,7 @@
             var cur = this.requestList[id];
             var url = cur.url;
             var type = cur.type;
+            var beforeData = cur.beforeData;
             var data;
             var _this = this;
             if (typeof cur.data === 'function'){
@@ -68,6 +72,9 @@
                     success: function (res){
                         if (typeof res === 'string'){
                             res = eval('(' + res + ')');
+                        }
+                        if (typeof beforeData === 'function'){
+                            res = beforeData.call(this, res);
                         }
                         onFinish(res);
                     }
