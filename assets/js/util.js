@@ -57,4 +57,5 @@
     window.clearAdvTimmer = function (){
         clearInterval(advTimmer);
     }
+
 })(window, $);

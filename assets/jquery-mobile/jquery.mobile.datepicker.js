@@ -74,10 +74,10 @@ $.widget("mobile.date",{
 		disabled: false, // The initial disabled state
 		inline: false, // True to set the calendar always visible
 		theme: "a",
-		dateFormat: "mm/dd/yy"
+		dateFormat: "yy-mm-dd"
 	},
 	_getCreateOptions: function(){
-		$.extend( this.options, $.datepicker._defaults );
+		$.extend($.datepicker._defaults, this.options);
 		return this._super();
 	},
 	_create:function(){

@@ -31,7 +31,8 @@
     
     <script type="text/javascript">
     window.formData = {
-        productId:null
+        productId:null,
+        productName: null
     };
     $(function (){
         var le = new Leyoubird($('#home'));
@@ -64,6 +65,10 @@
                         step:1,
                         productId: 1//window.formData.productId
                     }
+                },
+                beforeData: function (data){
+                    window.formData.productName = data.product.name;
+                    return data;
                 },
                 onFinish: function (){
                     window.clearAdvTimmer();
@@ -119,14 +124,20 @@
                     window.clearAdvTimmer();
                     
                     $('#deptDate').date();
-                    window.bindMsgCodeBtn($('#msgBtn'));
+
                     $('#back').on('click', function (){
                         le.toPage('t1_1');
                     });
                     $('#submit').on('click', function (){
 
-
                         var gender = $('input[name=gender]:checked').val();
+                        var departureDate = $('input[name=departureDate]').val();
+                        var numberOfPeople = $('input[name=numberOfPeople]').val();
+                        var email = $('input[name=email]').val();
+                        var mobile = $('input[name=mobile]').val();
+                        var remark = $('textarea[name=remark]').val();
+
+                        //alert('' + gender + departureDate + numberOfPeople + email + mobile + remark);
 
                         console.log(gender);
                         //alert(window.form.gender.value);
@@ -336,15 +347,15 @@
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">游玩日期</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="date" id="deptDate" value="" data-role="date" readonly="readonly">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureDate" id="deptDate" value="" readonly="readonly">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">人数</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="personNum" value="">
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="numberOfPeople" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">邮箱</label>
-                            <input class="le-form-input" type="email" data-clear-btn="false" name="mail" value="">
+                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
@@ -352,7 +363,7 @@
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">备注</label>
-                            <textarea name="textarea-1" id="others" placeholder="选填"></textarea>
+                            <textarea name="remark" id="others" placeholder="选填"></textarea>
                         </div>
                     </form>
                 </div>
