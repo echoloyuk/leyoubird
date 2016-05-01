@@ -49,8 +49,9 @@
             }, 500);
             console.log('change adv image');
         }
-
-        advTimmer = setInterval(onScroll, 3000);
+        if ($imgs.length){
+            advTimmer = setInterval(onScroll, 3000);
+        }
 
         //onScroll();
     };

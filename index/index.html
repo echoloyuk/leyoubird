@@ -63,7 +63,7 @@
                     return {
                         category:'recommend',
                         step:1,
-                        productId: 1//window.formData.productId
+                        productId: window.formData.productId
                     }
                 },
                 beforeData: function (data){
@@ -137,10 +137,47 @@
                         var mobile = $('input[name=mobile]').val();
                         var remark = $('textarea[name=remark]').val();
 
-                        //alert('' + gender + departureDate + numberOfPeople + email + mobile + remark);
+                        var str = '';
+                        if (!departureDate){
+                            str += '游玩日期, ';
+                        }
+                        if (!numberOfPeople){
+                            str += '人数, ';
+                        }
+                        if (!email){
+                            str += '邮箱, ';
+                        }
+                        if (!mobile){
+                            str += '手机号, ';
+                        }
 
-                        console.log(gender);
-                        //alert(window.form.gender.value);
+                        if (str){
+                            alert('请输入：' + str);
+                            return;
+                        } else {
+                            var $loading = $('#leLoading');
+                            $loading.show();
+                            $.ajax({
+                                url: 'http://123.56.194.182:8080/api/order',
+                                type: 'post',
+                                data: {
+                                    gender: gender,
+                                    departureDate: departureDate,
+                                    numberOfPeople: numberOfPeople,
+                                    email: email,
+                                    mobile: mobile,
+                                    remark: remark,
+                                    productId: window.formData.productId,
+                                    productName: window.formData.productName
+                                },
+                                success: function (res){
+                                    console.log(res);
+                                },
+                                complete: function (){
+                                    $loading.hide();
+                                }
+                            });
+                        }
                     });
                 }
             }, 
@@ -186,7 +223,7 @@
                 <ul class="le-image-info-panel" id="list">
                     {{#each summarys}}
                     <li class="le-items">
-                        <a data-ajax="false" le-id="{{id}}" data-transition="fade" class="le-panel">
+                        <a data-ajax="false" le-id="{{productId}}" data-transition="fade" class="le-panel">
                             <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
                                 <span>{{imageTitle}}</span>
