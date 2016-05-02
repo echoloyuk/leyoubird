@@ -41,8 +41,7 @@
                 url:'http://123.56.194.182:8080/api/summary',
                 type:'get',
                 data: {
-                    category:'recommend',
-                    step:'1'
+                    category:'recommend'
                 },
                 onFinish: function (){
                     $('#list a').on('click', function (){
@@ -62,7 +61,6 @@
                 data: function (){
                     return {
                         category:'recommend',
-                        step:1,
                         productId: window.formData.productId
                     }
                 },
@@ -158,8 +156,8 @@
                             var $loading = $('#leLoading');
                             $loading.show();
                             $.ajax({
-                                url: 'http://123.56.194.182:8080/api/order',
-                                type: 'post',
+                                url: 'http://123.56.194.182:8080/api/order/save',
+                                type: 'get',
                                 data: {
                                     gender: gender,
                                     departureDate: departureDate,
@@ -168,11 +166,12 @@
                                     mobile: mobile,
                                     remark: remark,
                                     productId: window.formData.productId,
-                                    productName: window.formData.productName
+                                    productName: window.formData.productName,
                                 },
-                                contentType :'application/json',
                                 success: function (res){
-                                    console.log(res);
+                                    if (res === 'success'){
+                                        le.toPage('t1_3');
+                                    }
                                 },
                                 complete: function (){
                                     $loading.hide();
