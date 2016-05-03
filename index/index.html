@@ -156,8 +156,8 @@
                             var $loading = $('#leLoading');
                             $loading.show();
                             $.ajax({
-                                url: 'http://123.56.194.182:8080/api/order/save',
-                                type: 'get',
+                                url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                type: 'post',
                                 data: {
                                     gender: gender,
                                     departureDate: departureDate,
@@ -169,12 +169,16 @@
                                     productName: window.formData.productName,
                                 },
                                 success: function (res){
+                                    alert(res.departureDate);
                                     if (res === 'success'){
                                         le.toPage('t1_3');
                                     }
                                 },
                                 complete: function (){
                                     $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
                                 }
                             });
                         }
