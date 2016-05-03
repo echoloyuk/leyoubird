@@ -36,23 +36,64 @@
         }
     });
 
-    window.formData = {};
+    window.formData = {
+        destinationCity: null,
+        departureDate: null,
+        days: null,
+        numberOfPeople: null,
+        departureCity:null
+    };
 
     $(function (){
         var le = new Leyoubird($('#home'));
         le.requestList = {
             't3': {
-                url:'',
+                url:'http://123.56.194.182:8080/api/custom',
                 type:'get',
-                data: {
-                    category:'travel',
-                    step:'1.1'
-                },
+                data: {},
                 onFinish: function (){
-                    $('#deptDate').date();
+                    window.bingAdvScroller($('#adv'));
+                    $('#departureDate').date();
 
                     $('#next').on('click', function (){
-                        le.toPage('t3_1');
+                        var destinationCity = $('#destinationCity').val();
+                        if (destinationCity && destinationCity.length){
+                            destinationCity = destinationCity.join(',');
+                        } else {
+                            destinationCity = '';
+                        }
+                        var departureDate = $('input[name=departureDate]').val();
+                        var days = $('input[name=days').val();
+                        var numberOfPeople = $('input[name=numberOfPeople]').val();
+                        var departureCity = $('input[name=departureCity').val();
+
+                        var str = '';
+                        if (!destinationCity){
+                            str += '目的地, ';
+                        }
+                        if (!departureDate){
+                            str += '日期, ';
+                        }
+                        if (!days){
+                            str += '天数, ';
+                        }
+                        if (!numberOfPeople){
+                            str += '人数, ';
+                        }
+                        if (!departureCity){
+                            str += '出发地';
+                        }
+                        if (!str){
+                            window.formData.destinationCity = destinationCity;
+                            window.formData.departureDate = departureDate;
+                            window.formData.days = days;
+                            window.formData.numberOfPeople = numberOfPeople;
+                            window.formData.departureCity = departureCity;
+                            le.toPage('t3_1');
+                        } else {
+                            alert('请输入：' + str);
+                        }
+                        //le.toPage('t3_1');
                     });
                 }
             },
@@ -140,11 +181,13 @@
     <div data-role="page" id="home"></div>
     <script id="t3" type="text/x-handlebars-template">
         <main role="main" class="ui-content without-header">
-            <section class="le-adv-panel narrow customTrip">
+            <section class="le-adv-panel narrow customTrip" id="adv">
                 <div class="img-panel">
-                    <div class="img" style="background-image:url(../assets/content/demo11.jpg)">
-                        <span class="img-info">定制你的旅行</span>
+                    {{#each productTopInfos}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
                     </div>
+                    {{/each}}
                 </div>
             </section>
             <section class="main-panel">
@@ -153,29 +196,28 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">目的地</label>
                             <div class="ui-field-contain">
-                                <select name="select-custom-19" id="dest" multiple="multiple" data-native-menu="false" data-mini="true">
-                                    <option value="1" selected="selected">曼谷</option>
-                                    <option value="2">清迈</option>
-                                    <option value="3">普吉岛</option>
-                                    <option value="4">甲米</option>
+                                <select name="destinationCity" id="destinationCity" multiple="multiple" data-native-menu="false" data-mini="true">
+                                    {{#each destCities}}
+                                    <option value="{{cityName}}">{{cityName}}</option>
+                                    {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">日期</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="deptDate" value="" data-role="date" readonly="readonly">
+                            <label class="le-form-label">日期</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureDate" id="departureDate" value="" data-role="date" readonly="readonly">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">天数</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                            <label class="le-form-label">天数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="days" value="">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">人数</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                            <label class="le-form-label">人数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="numberOfPeople" value="">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">出发地</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="">
+                            <label class="le-form-label">出发地</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureCity" value="">
                         </div>
                     </form>
                 </div>
