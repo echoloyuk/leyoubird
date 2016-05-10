@@ -160,10 +160,10 @@
                             var $loading = $('#leLoading');
                             $loading.show();
                             $.ajax({
-                                url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                //url: 'http://123.56.194.182:8080/api/order',
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order',
                                 type: 'post',
-                                data: {
+                                data: JSON.stringify({
                                     gender: gender,
                                     name: name,
                                     departureDate: departureDate,
@@ -173,13 +173,14 @@
                                     remark: remark,
                                     productId: window.formData.productId,
                                     productName: window.formData.productName,
-                                },
+                                }),
                                 dataType:'json',
                                 contentType:'application/json',
                                 success: function (res){
-                                    alert(res.departureDate);
-                                    if (res === 'success'){
+                                    if (res && res.msg == 'success'){
                                         le.toPage('t1_3');
+                                    } else {
+                                        alert('提交遇到了错误');
                                     }
                                 },
                                 complete: function (){
@@ -187,6 +188,8 @@
                                 },
                                 error: function (responseData, textStatus, errorThrown){
                                     console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
                                 }
                             });
                         }
