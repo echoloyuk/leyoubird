@@ -43,7 +43,7 @@
         numberOfPeople: null,
         departureCity:null,
         residencePref: null,
-        residenceType: null,
+        hotelLevel: null,
         trafficPref: null,
         flightPref: null,
     };
@@ -126,21 +126,21 @@
                     };
                     selectList($('#flightPref'), 'flightPref');
                     selectList($('#residencePref'), 'residencePref');
-                    selectList($('#residenceType'), 'residenceType');
+                    selectList($('#hotelLevel'), 'hotelLevel');
                     selectList($('#trafficPref'), 'trafficPref');
 
                     $('#hotel').on('click', function (){
                         if ($(this).hasClass('checked')){
-                            $('#residenceType').show();
+                            $('#hotelLevel').show();
                         } else {
-                            window.formData.residenceType = null;
+                            window.formData.hotelLevel = null;
                         }
                     });
                     $('#house').on('click', function (){
                         if ($(this).hasClass('checked')){
-                            $('#residenceType').hide();
-                            $('#residenceType .select-btn').removeClass('checked');
-                            window.formData.residenceType = null;
+                            $('#hotelLevel').hide();
+                            $('#hotelLevel .select-btn').removeClass('checked');
+                            window.formData.hotelLevel = null;
                         }
                     });
 
@@ -151,7 +151,7 @@
                     $('#next').on('click', function (){
                         var flightPref = window.formData.flightPref;
                         var residencePref = window.formData.residencePref;
-                        var residenceType = window.formData.residenceType;
+                        var hotelLevel = window.formData.hotelLevel;
                         var trafficPref = window.formData.trafficPref;
                         var str = '';
                         if (!flightPref){
@@ -160,7 +160,7 @@
                         if (!residencePref){
                             str += '住宿类型, ';
                         } else if (residencePref == '1'){
-                            if (!residenceType){
+                            if (!hotelLevel){
                                 str += '酒店星级, ';
                             }
                         }
@@ -226,7 +226,7 @@
                                     departureCity: window.formData.departureCity,
                                     flightPref: window.formData.flightPref,
                                     residencePref: window.formData.residencePref,
-                                    residenceType: window.formData.residenceType,
+                                    hotelLevel: window.formData.hotelLevel,
                                     trafficPref: window.formData.trafficPref
                                 },
                                 success: function (res){
@@ -234,6 +234,8 @@
                                         le.toPage('t3_3');
                                     }
                                 },
+                                contentType:'application/json',
+                                dataType:'json',
                                 complete: function (){
                                     $loading.hide();
                                 },
@@ -368,7 +370,7 @@
                             <div class="select-btn" id="house" le-val="2">特色民宿</div>
                         </div>
                     </div>
-                    <div class="select-items" id="residenceType" style="display:none;">
+                    <div class="select-items" id="hotelLevel" style="display:none;">
                         <div class="select-grid">
                             <div class="select-btn" le-val="1">三星经济</div>
                         </div>
