@@ -36,9 +36,10 @@
         }
     });
     window.formData = {
-        serviceType: '', //服务类型: airport, remote
-        carType: '', //车型要求: eco, lux
-        siteType: '' //车型标准: 5,7,12
+        productId: null,
+        serveType: null,
+        grade: null,
+        seats: null
     };
     $(function (){
         var le = new Leyoubird($('#home'));
@@ -47,8 +48,7 @@
                 url:'http://123.56.194.182:8080/api/summary',
                 type:'get',
                 data: {
-                    category:'custom',
-                    step:'1'
+                    category:'shuttle'
                 },
                 onFinish: function (){
                     $('#list a').on('click', function (){
@@ -56,7 +56,7 @@
                         var id = $this.attr('le-id');
                         window.formData.productId = id;
 
-                        le.toPage('t1_1');
+                        le.toPage('t2_1');
                     });
 
                     window.bingAdvScroller($('#adv'));
@@ -65,10 +65,7 @@
             't2_1': {
                 url:'',
                 type:'get',
-                data: {
-                    category:'travel',
-                    step:'1.1'
-                },
+                data: {},
                 onFinish: function (){
                     window.clearAdvTimmer();
 
@@ -88,47 +85,47 @@
                             }
                         });
                     };
-                    selectList($('#servType'));
-                    selectList($('#carType'));
-                    selectList($('#carSym'));
+                    selectList($('#serveType'));
+                    selectList($('#grade'));
+                    selectList($('#seats'));
 
                     
-                    $('#servType .select-btn').on('click', function (){
+                    $('#serveType .select-btn').on('click', function (){
                         if ($(this).hasClass('checked')){
-                            window.formData.serviceType = $(this).attr('le-data');
+                            window.formData.serveType = $(this).attr('le-data');
                         } else {
-                            window.formData.serviceType = '';
+                            window.formData.serveType = '';
                         }
                     });
 
-                    $('#carType .select-btn').on('click', function (){
+                    $('#grade .select-btn').on('click', function (){
                         if ($(this).hasClass('checked')){
-                            window.formData.carType = $(this).attr('le-data');
+                            window.formData.grade = $(this).attr('le-data');
                         } else {
-                            window.formData.carType = '';
+                            window.formData.grade = '';
                         }
                     });
 
-                    $('#carSym .select-btn').on('click', function (){
+                    $('#seats .select-btn').on('click', function (){
                         if ($(this).hasClass('checked')){
-                            window.formData.siteType = $(this).attr('le-data');
+                            window.formData.seats = $(this).attr('le-data');
                         } else {
-                            window.formData.siteType = '';
+                            window.formData.seats = '';
                         }
                     });/**/
 
                     $('#next').on('click', function (){
                         var flag = true;
                         var str = '';
-                        if (!window.formData.serviceType){
+                        if (!window.formData.serveType){
                             str += '服务类型 ';
                             flag = false;
                         }
-                        if (!window.formData.carType){
+                        if (!window.formData.grade){
                             str += '车型要求 ';
                             flag = false;
                         }
-                        if (!window.formData.siteType){
+                        if (!window.formData.seats){
                             str += '车型标准 ';
                             flag = false;
                         }
@@ -140,14 +137,16 @@
                     });
 
                 },
-                formData: window.formData
             },
             't2_2': {
-                url:'',
+                url:'http://123.56.194.182:8080/api/summary/shuttle',
                 type:'get',
-                data: {
-                    category:'travel',
-                    step:'1.1'
+                data: function () {
+                    return {
+                        serveType: window.formData.serveType,
+                        grade: window.formData.grade,
+                        seats: window.formData.seats
+                    }
                 },
                 onFinish: function (){
                     $('#back').on('click', function (){
@@ -296,10 +295,10 @@
                 <ul class="le-image-info-panel narrow" id="list">
                     {{#each summarys}}
                     <li class="le-items">
-                        <a class="le-panel" data-ajax="false" le-id="{{productId}}">
+                        <a class="le-panel" data-ajax="false" le-id="{{id}}">
                             <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
-                                <span>{{imageTitle}}</span>
+                                <span>{{name}}</span>
                             </div>
                         </a>
                     </li>
@@ -345,33 +344,33 @@
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-items-select">
                     <div class="select-title">服务类型</div>
-                    <div class="select-items" id="servType">
+                    <div class="select-items" id="serveType">
                         <div class="select-grid">
-                            <div class="select-btn {{#when serviceType 'airport'}}checked{{/when}}" le-data="airport">机场接送</div>
+                            <div class="select-btn" le-data="1">机场接送</div>
                         </div>
                         <div class="select-grid">
-                            <div class="select-btn {{#when serviceType 'remote'}}checked{{/when}}" le-data="remote">异地接送</div>
+                            <div class="select-btn" le-data="2">异地接送</div>
                         </div>
                     </div>
                     <div class="select-title">车型要求</div>
-                    <div class="select-items" id="carType" style="margin-bottom:0.4em;">
+                    <div class="select-items" id="grade" style="margin-bottom:0.4em;">
                         <div class="select-grid">
-                            <div class="select-btn {{#when carType 'eco'}}checked{{/when}}" id="hotel" le-data="eco">品质</div>
+                            <div class="select-btn" id="hotel" le-data="1">品质</div>
                         </div>
                         <div class="select-grid">
-                            <div class="select-btn {{#when carType 'lux'}}checked{{/when}}" id="house" le-data="lux">豪华</div>
+                            <div class="select-btn" id="house" le-data="2">豪华</div>
                         </div>
                     </div>
                     <div class="select-title">车型标准</div>
-                    <div class="select-items" id="carSym">
+                    <div class="select-items" id="seats">
                         <div class="select-grid" style="width:33%">
-                            <div class="select-btn {{#when siteType '5'}}checked{{/when}}" le-data="5">5座</div>
+                            <div class="select-btn" le-data="5">5座</div>
                         </div>
                         <div class="select-grid" style="width:33%">
-                            <div class="select-btn {{#when siteType '7'}}checked{{/when}}" le-data="7">7座</div>
+                            <div class="select-btn" le-data="7">7座</div>
                         </div>
                         <div class="select-grid" style="width:33%">
-                            <div class="select-btn {{#when siteType '12'}}checked{{/when}}" le-data="12">12座</div>
+                            <div class="select-btn" le-data="12">12座</div>
                         </div>
                     </div>
                 </div>
