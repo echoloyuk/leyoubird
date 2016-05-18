@@ -65,7 +65,7 @@
                     }
                 },
                 beforeData: function (data){
-                    window.formData.productName = data.product.name;
+                    window.formData.productName = data.product.imageTitle;
                     return data;
                 },
                 onFinish: function (){
@@ -161,7 +161,7 @@
                             $loading.show();
                             $.ajax({
                                 //url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                url: 'http://123.56.194.182:8080/api/order',
+                                url: 'http://123.56.194.182:8080/api/order?category=recommend',
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
@@ -172,7 +172,7 @@
                                     mobile: mobile,
                                     remark: remark,
                                     productId: window.formData.productId,
-                                    productName: window.formData.productName,
+                                    productName: window.formData.productName
                                 }),
                                 dataType:'json',
                                 contentType:'application/json',
@@ -238,7 +238,7 @@
                 <ul class="le-image-info-panel" id="list">
                     {{#each summarys}}
                     <li class="le-items">
-                        <a data-ajax="false" le-id="{{productId}}" data-transition="fade" class="le-panel">
+                        <a data-ajax="false" le-id="{{id}}" data-transition="fade" class="le-panel">
                             <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
                                 <span>{{imageTitle}}</span>
@@ -266,10 +266,6 @@
                 <a href="deepenExperience.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
                     <div class="le-footer-btn-icon">&#xe64f;</div>
                     <div class="le-footer-btn-content">深度体验</div>
-                </a>
-                <a href="" class="le-footer-btn" data-ajax="false">
-                    <div class="le-footer-btn-icon">&#xf01d8;</div>
-                    <div class="le-footer-btn-content">我的旅行</div>
                 </a>
             </div>
         </footer>
