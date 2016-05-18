@@ -69,10 +69,6 @@
                 onFinish: function (){
                     window.clearAdvTimmer();
 
-                    $('#back').on('click', function (){
-                        le.toPage('t2');
-                    });
-
                     var selectList = function ($target){
                         var $btns = $('.select-btn', $target);
                         $btns.on('click', function (){
@@ -154,16 +150,21 @@
                     });
 
                     $('#list a').on('click', function (){
+                        var $this = $(this);
+                        var id = $this.attr('le-id');
+                        window.formData.productId = id;
                         le.toPage('t2_2_1');
                     });
                 }
             },
             't2_2_1': {
-                url:'',
+                url:'http://123.56.194.182:8080/api/travel',
                 type:'get',
-                data: {
-                    category:'travel',
-                    step:'1.1'
+                data: function (){
+                    return {
+                        category: 'shuttle',
+                        productId: window.formData.productId
+                    }
                 },
                 onFinish: function (){
                     var listFun = function ($target){
@@ -267,7 +268,7 @@
                 }
             },
         }
-        le.toPage('t2');
+        le.toPage('t2_1');
     });
     </script>
 </head>
@@ -306,26 +307,7 @@
                 </ul>
             </section>
         </main>
-        <footer data-role="footer" class="le-main-footer">
-            <div class="le-footer-btn-list">
-                <a href="index.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
-                    <div class="le-footer-btn-icon">&#xf015c;</div>
-                    <div class="le-footer-btn-content">热门推荐</div>
-                </a>
-                <a href="" data-ajax="false" class="le-footer-btn focus">
-                    <div class="le-footer-btn-icon">&#xe651;</div>
-                    <div class="le-footer-btn-content">接送服务</div>
-                </a>
-                <a href="customTrip.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
-                    <div class="le-footer-btn-icon">&#xf0126;</div>
-                    <div class="le-footer-btn-content">定制旅行</div>
-                </a>
-                <a href="deepenExperience.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
-                    <div class="le-footer-btn-icon">&#xe64f;</div>
-                    <div class="le-footer-btn-content">深度体验</div>
-                </a>
-            </div>
-        </footer>
+        
     </script>
     <script id="t2_1" type="text/x-handlebars-template">
         <header data-role="header" class="le-main-header">
@@ -334,7 +316,6 @@
                 <span class="logo"></span>
                 <span>乐游鸟旅行</span>
             </span>
-            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
         </header>
         <main role="main" class="ui-content" style="margin-bottom:0">
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
@@ -373,6 +354,26 @@
                 <a class="ui-btn ui-corner-all" data-ajax="false" id="next">下一步</a>
             </section>
         </main>
+        <footer data-role="footer" class="le-main-footer">
+            <div class="le-footer-btn-list">
+                <a href="index.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xf015c;</div>
+                    <div class="le-footer-btn-content">热门推荐</div>
+                </a>
+                <a href="" data-ajax="false" class="le-footer-btn focus">
+                    <div class="le-footer-btn-icon">&#xe651;</div>
+                    <div class="le-footer-btn-content">接送服务</div>
+                </a>
+                <a href="customTrip.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xf0126;</div>
+                    <div class="le-footer-btn-content">定制旅行</div>
+                </a>
+                <a href="deepenExperience.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xe64f;</div>
+                    <div class="le-footer-btn-content">深度体验</div>
+                </a>
+            </div>
+        </footer>
     </script>
     <script id="t2_2" type="text/x-handlebars-template">
         <header data-role="header" class="le-main-header">
@@ -385,48 +386,15 @@
         <main role="main" class="ui-content">
             <section class="main-panel" style="margin-top:2em;">
                 <ul class="le-shuttle-service-list" id="list">
+                {{#each summarys}}
                     <li>
-                        <a class="product-item" data-ajax="false">
-                            <div class="product-img" style="background-image:url(./assets/content/demo13.jpg)"></div>
-                            <div class="title">接送服务名称1, 海外N日游</div>
-                            <div class="price">￥1230</div>
+                        <a class="product-item" data-ajax="false" le-id="{{id}}">
+                            <div class="product-img" style="background-image:url({{imageUrl}})"></div>
+                            <div class="title">{{imageTitle}}</div>
+                            <div class="price">{{price.currency}}{{price.money}}</div>
                         </a>
                     </li>
-                    <li>
-                        <a class="product-item" data-ajax="false">
-                            <div class="product-img" style="background-image:url(./assets/content/demo14.jpg)"></div>
-                            <div class="title">接送服务名称2, 海外N日游</div>
-                            <div class="price">￥830</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product-item" data-ajax="false">
-                            <div class="product-img" style="background-image:url(./assets/content/demo15.jpg)"></div>
-                            <div class="title">接送服务名称3, 海外N日游</div>
-                            <div class="price">￥1430</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="product-item" data-ajax="false">
-                            <div class="product-img" style="background-image:url(./assets/content/demo16.jpg)"></div>
-                            <div class="title">接送服务名称4, 海外N日游</div>
-                            <div class="price">￥230</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product-item" data-ajax="false">
-                            <div class="product-img" style="background-image:url(./assets/content/demo13.jpg)"></div>
-                            <div class="title">接送服务名称1, 海外N日游</div>
-                            <div class="price">￥123</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product-item" data-ajax="false">
-                            <div class="product-img" style="background-image:url(./assets/content/demo14.jpg)"></div>
-                            <div class="title">接送服务名称2, 海外N日游</div>
-                            <div class="price">￥5430</div>
-                        </a>
-                    </li>
+                {{/each}}
                 </ul>
             </section>
         </main>

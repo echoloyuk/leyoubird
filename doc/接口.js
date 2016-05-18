@@ -178,3 +178,23 @@
     ]
 
 }
+
+
+
+
+
+//////////////////////////////////////
+原来是想一个接口处理所有订单的post请求 现在看不行 分成4个接口了
+分别是：
+
+推荐(1.2.html) http://123.56.194.182:8080/api/order/recommend
+
+接送(2.4.html) 
+http://123.56.194.182:8080/api/order/shuttle (原来就有不用改)
+
+定制(3.2.html) 
+http://123.56.194.182:8080/api/order/custom
+
+深度(4.2.html) http://123.56.194.182:8080/api/order/deepen
+
+url结尾不需要写category=xxx 直接把requestBody传过来就行
