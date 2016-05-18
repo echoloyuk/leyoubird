@@ -198,3 +198,27 @@ http://123.56.194.182:8080/api/order/custom
 深度(4.2.html) http://123.56.194.182:8080/api/order/deepen
 
 url结尾不需要写category=xxx 直接把requestBody传过来就行
+
+
+arrivalHotelAddress : 到达酒店地址 ,
+arrivalHotelName : 到达酒店名称 ,
+category : 分类 ,
+createdTime : 订单创建时间(yyyy-MM-dd HH:mm:ss)不用赋值 ,
+departureHotelAddress : 出发酒店地址 ,
+departureHotelName : 出发酒店名称 ,
+email : 邮箱 ,
+gender : 性别(1:男;2:女) ,
+grade : 档次(1:品质 2:豪华) ,
+id ,
+meetTime : 见面时间(yyyy-MM-dd HH:mm:ss) ,
+mobile : 手机号 ,
+name : 姓名 ,
+productId : 产品id ,
+remark : 备注 ,
+seats : 座位(5, 7, 12) ,
+serveType : 服务类型(1:机场接送 2:异地接送) ,
+status : 订单状态(暂定1:新建 2:已付款 3:完成 4:取消) ,
+hotelName,
+hotelAddress,
+updatedTime ,
+userId 

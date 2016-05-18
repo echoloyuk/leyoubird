@@ -45,22 +45,6 @@
         var le = new Leyoubird($('#home'));
         le.requestList = {
             't2': {
-                url:'http://123.56.194.182:8080/api/summary',
-                type:'get',
-                data: {
-                    category:'shuttle'
-                },
-                onFinish: function (){
-                    $('#list a').on('click', function (){
-                        var $this = $(this);
-                        var id = $this.attr('le-id');
-                        window.formData.productId = id;
-
-                        le.toPage('t2_1');
-                    });
-
-                    window.bingAdvScroller($('#adv'));
-                }
             }, 
             't2_1': {
                 url:'',
@@ -206,7 +190,7 @@
                     });
 
                     $('#next').on('click', function (){
-                        if (window.formData.serviceType == 'airport'){
+                        if (window.formData.serveType == '1'){
                             le.toPage('t2_3');
                         } else {
                             le.toPage('t2_4');
@@ -231,7 +215,82 @@
                     window.bindMsgCodeBtn($('#msgBtn'));
 
                     $('#submit').on('click', function (){
-                        le.toPage('t2_5');
+                        var gender = $('input[name=gender]:checked').val();
+                        var name = $('input[name=name]').val();
+                        var date = $('input[name=date]').val();
+                        var flightNo = $('input[name=flightNo]').val().toUpperCase();
+                        var hotelName = $('input[name=hotelName]').val();
+                        var hotelAddress = $('textarea[name=hotelAddress]').val();
+                        var email = $('input[name=email]').val();
+                        var mobile = $('input[name=mobile]').val();
+                        var remark = $('textarea[name=remark]').val();
+
+                        var str = '';
+                        if (!name){
+                            str += '姓名, ';
+                        }
+                        if (!date){
+                            str += '日期v';
+                        }
+                        if (!flightNo){
+                            str += '航班号, ';
+                        }
+                        if (!hotelName){
+                            str += '酒店名称, ';
+                        }
+                        if (!hotelAddress){
+                            str += '酒店地址, ';
+                        }
+                        if (!email){
+                            str += '邮箱, ';
+                        }
+                        if (!mobile){
+                            str += '手机号, ';
+                        }
+
+                        if (str){
+                            alert('请输入：' + str);
+                        } else {
+                            var $loading = $('#leLoading');
+                            $loading.show();
+                            $.ajax({
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/shuttle',
+                                type: 'post',
+                                data: JSON.stringify({
+                                    gender: gender,
+                                    name: name,
+                                    date: date,
+                                    flightNo: flightNo,
+                                    hotelName: hotelName,
+                                    hotelAddress: hotelAddress,
+                                    email: email,
+                                    mobile: mobile,
+                                    remark: remark,
+                                    productId: window.formData.productId,
+                                    serveType: window.formData.serveType,
+                                    grade: window.formData.grade,
+                                    seats: window.formData.seats
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
+                                success: function (res){
+                                    if (res && res.msg == 'success'){
+                                        le.toPage('t2_5');
+                                    } else {
+                                        alert('提交遇到了错误');
+                                    }
+                                },
+                                complete: function (){
+                                    $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
+                                }
+                            });
+                        }
                     });
                 }
             },
@@ -252,7 +311,90 @@
                     window.bindMsgCodeBtn($('#msgBtn'));
 
                     $('#submit').on('click', function (){
-                        le.toPage('t2_5');
+                        var name = $('input[name=name]').val();
+                        var date = $('input[name=date]').val();
+                        var time = $('input[name=time]').val();
+                        var departureHotelName = $('input[name=departureHotelName]').val();
+                        var departureHotelAddress =  $('textarea[name=departureHotelAddress]').val();
+                        var arrivalHotelName = $('input[name=arrivalHotelName]').val();
+                        var arrivalHotelAddress = $('textarea[name=arrivalHotelAddress]').val();
+                        var email = $('input[name=email]').val();
+                        var mobile = $('input[name=mobile]').val();
+                        var remark = $('textarea[name=remark]').val();
+
+                        var str = '';
+                        if (!name){
+                            str += '姓名, ';
+                        }
+                        if (!date){
+                            str += '日期, ';
+                        }
+                        if (!time){
+                            str += '时间, ';
+                        }
+                        if (!departureHotelName){
+                            str += '出发酒店, ';
+                        }
+                        if (!departureHotelAddress){
+                            str += '出发酒店地址, ';
+                        }
+                        if (!arrivalHotelName){
+                            str += '到达酒店, ';
+                        }
+                        if (!arrivalHotelAddress){
+                            str += '到达酒店地址, ';
+                        }
+                        if (!email){
+                            str += '邮箱, ';
+                        }
+                        if (!mobile){
+                            str += '手机号';
+                        }
+
+                        if (str){
+                            alert('请输入：' + str);
+                        } else {
+                            var $loading = $('#leLoading');
+                            $loading.show();
+                            $.ajax({
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/shuttle',
+                                type: 'post',
+                                data: JSON.stringify({
+                                    name: name,
+                                    date: date,
+                                    time: time,
+                                    departureHotelName: departureHotelName,
+                                    departureHotelAddress: departureHotelAddress,
+                                    arrivalHotelName: arrivalHotelName,
+                                    arrivalHotelAddress: arrivalHotelAddress,
+                                    email: email,
+                                    mobile: mobile,
+                                    remark: remark,
+                                    productId: window.formData.productId,
+                                    serveType: window.formData.serveType,
+                                    grade: window.formData.grade,
+                                    seats: window.formData.seats
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
+                                success: function (res){
+                                    if (res && res.msg == 'success'){
+                                        le.toPage('t2_5');
+                                    } else {
+                                        alert('提交遇到了错误');
+                                    }
+                                },
+                                complete: function (){
+                                    $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
+                                }
+                            });
+                        }
                     });
                 }
             },
@@ -409,21 +551,27 @@
             <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
         </header>
         <main role="main" class="ui-content" style="margin-bottom:0">
-            <section class="le-adv-panel ext-narrow">
+            <section class="le-adv-panel ext-narrow" id="adv">
                 <div class="img-panel">
-                    <div class="img" style="background-image:url(./assets/content/demo19.jpg)"></div>
-                    <div class="img"></div>
+                    {{#each productTopInfos}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
                 </div>
             </section>
+            {{#with product}}
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-price-panel">
-                    <div class="le-price-title">产品名称12345</div>
+                    <div class="le-price-title">{{imageTitle}}</div>
                     <div class="le-price-copy">
-                        <span class="tag">直飞</span>
-                        <span class="tag">高星</span>
-                        <span class="tag">高星酒店</span>
+                        {{#each tag}}
+                        <span class="tag">{{this}}</span>
+                        {{/each}}
                     </div>
-                    <div class="le-price"><span class="money">￥</span>20000<span class="qi">起</span></div>
+                    {{#with price}}
+                    <div class="le-price"><span class="money">{{currency}}</span>{{money}}<span class="qi">{{#if showQi}}起{{/if}}</span></div>
+                    {{/with}}
                 </div>
                 <div class="le-list-menu" id="list">
                     <div class="le-list-item" data-le-open="true">
@@ -432,28 +580,21 @@
                             <span class="ctrl-icon"></span>
                         </div>
                         <div class="le-list-content">
+                            {{#each productDetails}}
                             <div class="le-list-product-title">
                                 <span class="icon point"></span>
-                                <span>Day1</span>
+                                <span>{{title}}</span>
                             </div>
                             <div class="le-list-product-info">
                                 <div class="content">
-                                    <p>这是一段测试的介绍文字<br>这是一段测试的介绍文字</p>
-                                    <img src="assets/content/demo12.jpg" alt="">
+                                    <p>{{content}}</p>
+                                    <img src="{{imageUrl}}" alt="">
                                 </div>
                             </div>
-                            <div class="le-list-product-title">
-                                <span class="icon paper-plane"></span>
-                                <span>Day2</span>
-                            </div>
-                            <div class="le-list-product-info">
-                                <div class="content">
-                                    <p>这是一段测试的介绍文字<br>这是一段测试的介绍文字</p>
-                                    <img src="assets/content/demo12.jpg" alt="">
-                                </div>
-                            </div>
+                            {{/each}}
                         </div>
                     </div>
+            {{/with}}
                     <div class="le-list-item">
                         <div class="le-list-title">
                             <span class="title">费用说明</span>
@@ -461,8 +602,7 @@
                         </div>
                         <div class="le-list-content">
                             <div class="content">
-                                <p>这是一个说明</p>
-                                <p>费用说明价格：￥1233</p>
+                                <p>{{fareDetail}}</p>
                             </div>
                         </div>
                     </div>
@@ -473,7 +613,7 @@
                         </div>
                         <div class="le-list-content">
                             <div class="content">
-                                <p>这是一个预定须知</p>
+                                <p>{{noticeDetail}}</p>
                             </div>
                         </div>
                     </div>
@@ -484,12 +624,12 @@
                         </div>
                         <div class="le-list-content">
                             <div class="content">
-                                <p>这里是其他注意事项</p>
+                                <p>{{otherDetail}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a id="next" data-ajax="false" class="ui-btn ui-corner-all" id="next">下一步</a>
+                <a id="next" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
             </section>
         </main>
     </script>
@@ -512,52 +652,44 @@
                             <div class="le-form-grid">
                                 <div class="le-form-grid-item">
                                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+                                        <input type="radio" name="gender" id="radio-choice-h-2a" value="1" checked="checked">
                                         <label for="radio-choice-h-2a">先生</label>
-                                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+                                        <input type="radio" id="radio-choice-h-2b" name="gender" value="2">
                                         <label for="radio-choice-h-2b">女士</label>
                                     </fieldset>
                                 </div>
                                 <div class="le-form-grid-item" style="width:100px;">
-                                    <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="">
+                                    <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
                                 </div>
                             </div>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">日期</label>
-                            <input class="le-form-input" readonly="readonly" type="text" data-clear-btn="false" name="dest" id="date" value="">
+                            <input class="le-form-input" readonly="readonly" type="text" data-clear-btn="false" name="date" id="date" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">航班号</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="" placeholder="接送机必填">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="flightNo" value="" placeholder="接送机必填">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">酒店名称</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="" placeholder="请填写接送酒店英文名称">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="hotelName" value="" placeholder="请填写接送酒店英文名称">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">酒店地址</label>
-                            <textarea name="textarea-1" id="textarea-1" placeholder="请填写接送酒店英文地址"></textarea>
+                            <textarea name="hotelAddress" placeholder="请填写接送酒店英文地址"></textarea>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">邮箱</label>
-                            <input class="le-form-input" type="email" data-clear-btn="false" name="dest" id="dest" value="" placeholder="电子凭证将发送至邮箱">
+                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="" placeholder="电子凭证将发送至邮箱">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
-                            <div class="le-form-grid">
-                                <div class="le-form-grid-item" style="width:100px">
-                                    <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="" placeholder="验证码">
-                                </div>
-                                <div class="le-form-grid-item" style="width:100px;">
-                                    <div class="le-msgcode-btn" data-ajax="false" id="msgBtn">获取验证码</div>
-                                </div>
-                            </div>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">备注</label>
-                            <textarea name="textarea-1" id="textarea-1" placeholder="选填，如有其它需求，可以此处填写"></textarea>
+                            <textarea name="remark" placeholder="选填，如有其它需求，可以此处填写"></textarea>
                         </div>
                     </form>
                 </div>
@@ -581,51 +713,43 @@
                     <form action="">
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">联系人</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">日期</label>
-                            <input class="le-form-input" readonly="readonly" type="text" data-clear-btn="false" name="dest" id="date" value="">
+                            <input class="le-form-input" readonly="readonly" type="text" data-clear-btn="false" name="date" value="" id="date">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">时间</label>
-                            <input class="le-form-input" type="time" data-clear-btn="false" name="dest" id="dest" value="">
+                            <input class="le-form-input" type="time" data-clear-btn="false" name="time" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">出发酒店</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="" placeholder="请填写英文名称">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureHotelName" value="" placeholder="请填写英文名称">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3"></label>
-                            <textarea name="textarea-1" id="textarea-1" placeholder="请填写英文地址"></textarea>
+                            <textarea name="departureHotelAddress" placeholder="请填写英文地址"></textarea>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">到达酒店</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="" placeholder="请填写英文名称">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="arrivalHotelName" value="" placeholder="请填写英文名称">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3"></label>
-                            <textarea name="textarea-1" id="textarea-1" placeholder="请填写英文地址"></textarea>
+                            <textarea name="arrivalHotelAddress" placeholder="请填写英文地址"></textarea>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
-                            <div class="le-form-grid">
-                                <div class="le-form-grid-item" style="width:100px">
-                                    <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="" placeholder="验证码">
-                                </div>
-                                <div class="le-form-grid-item" style="width:100px;">
-                                    <div class="le-msgcode-btn" data-ajax="false" id="msgBtn">获取验证码</div>
-                                </div>
-                            </div>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">邮箱</label>
-                            <input class="le-form-input" type="email" data-clear-btn="false" name="dest" id="dest" value="" placeholder="电子凭证将发送至邮箱">
+                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="" placeholder="电子凭证将发送至邮箱">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">备注</label>
-                            <textarea name="textarea-1" id="textarea-1" placeholder="选填，如有其它需求，可以此处填写"></textarea>
+                            <textarea name="remark" placeholder="选填，如有其它需求，可以此处填写"></textarea>
                         </div>
                     </form>
                 </div>
