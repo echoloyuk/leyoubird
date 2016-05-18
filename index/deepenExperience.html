@@ -70,7 +70,7 @@
                     }
                 },
                 beforeData: function (data){
-                    window.formData.productName = data.product.name;
+                    window.formData.productName = data.product.imageTitle;
                     return data;
                 },
                 onFinish: function (){
@@ -163,9 +163,10 @@
                             var $loading = $('#leLoading');
                             $loading.show();
                             $.ajax({
-                                url: 'http://123.56.194.182:8080/api/order',
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/deepen',
                                 type: 'post',
-                                data: {
+                                data: JSON.stringify({
                                     gender: gender,
                                     departureDate: departureDate,
                                     numberOfPeople: numberOfPeople,
@@ -174,12 +175,23 @@
                                     remark: remark,
                                     productId: window.formData.productId,
                                     productName: window.formData.productName
-                                },
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
                                 success: function (res){
-                                    console.log(res);
+                                    if (res && res.msg == 'success'){
+                                        le.toPage('t4_3');
+                                    } else {
+                                        alert('提交遇到了错误');
+                                    }
                                 },
                                 complete: function (){
                                     $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
                                 }
                             });
                         }
@@ -225,7 +237,7 @@
                 <ul class="le-image-info-panel narrow" id="list">
                     {{#each summarys}}
                     <li class="le-items">
-                        <a class="le-panel" data-ajax="false" le-id="{{productId}}">
+                        <a class="le-panel" data-ajax="false" le-id="{{id}}">
                             <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
                                 <span>{{imageTitle}}</span>
@@ -279,7 +291,7 @@
             {{#with product}}
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
                 <div class="le-price-panel">
-                    <div class="le-price-title">{{name}}</div>
+                    <div class="le-price-title">{{imageTitle}}</div>
                     <div class="le-price-copy">
                         {{#each tag}}
                         <span class="tag">{{this}}</span>

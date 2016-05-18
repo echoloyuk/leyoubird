@@ -37,12 +37,12 @@
     });
 
     window.formData = {
-        destinationCity: null,
+        destCity: null,
         departureDate: null,
         days: null,
         numberOfPeople: null,
-        departureCity:null,
-        residencePref: null,
+        depCity:null,
+        livePref: null,
         hotelLevel: null,
         trafficPref: null,
         flightPref: null,
@@ -62,19 +62,19 @@
                     $('#departureDate').date();
 
                     $('#next').on('click', function (){
-                        var destinationCity = $('#destinationCity').val();
-                        if (destinationCity && destinationCity.length){
-                            destinationCity = destinationCity.join(',');
+                        var destCity = $('#destCity').val();
+                        if (destCity && destCity.length){
+                            destCity = destCity.join(',');
                         } else {
-                            destinationCity = '';
+                            destCity = '';
                         }
                         var departureDate = $('input[name=departureDate]').val();
                         var days = $('input[name=days').val();
                         var numberOfPeople = $('input[name=numberOfPeople]').val();
-                        var departureCity = $('input[name=departureCity').val();
+                        var depCity = $('input[name=depCity').val();
 
                         var str = '';
-                        if (!destinationCity){
+                        if (!destCity){
                             str += '目的地, ';
                         }
                         if (!departureDate){
@@ -86,15 +86,15 @@
                         if (!numberOfPeople){
                             str += '人数, ';
                         }
-                        if (!departureCity){
+                        if (!depCity){
                             str += '出发地';
                         }
                         if (!str){
-                            window.formData.destinationCity = destinationCity;
+                            window.formData.destCity = destCity;
                             window.formData.departureDate = departureDate;
                             window.formData.days = days;
                             window.formData.numberOfPeople = numberOfPeople;
-                            window.formData.departureCity = departureCity;
+                            window.formData.depCity = depCity;
                             le.toPage('t3_1');
                         } else {
                             alert('请输入：' + str);
@@ -127,7 +127,7 @@
                         });
                     };
                     selectList($('#flightPref'), 'flightPref');
-                    selectList($('#residencePref'), 'residencePref');
+                    selectList($('#livePref'), 'livePref');
                     selectList($('#hotelLevel'), 'hotelLevel');
                     selectList($('#trafficPref'), 'trafficPref');
 
@@ -152,16 +152,16 @@
 
                     $('#next').on('click', function (){
                         var flightPref = window.formData.flightPref;
-                        var residencePref = window.formData.residencePref;
+                        var livePref = window.formData.livePref;
                         var hotelLevel = window.formData.hotelLevel;
                         var trafficPref = window.formData.trafficPref;
                         var str = '';
                         if (!flightPref){
                             str += '航班偏好, ';
                         }
-                        if (!residencePref){
+                        if (!livePref){
                             str += '住宿类型, ';
-                        } else if (residencePref == '1'){
+                        } else if (livePref == '1'){
                             if (!hotelLevel){
                                 str += '酒店星级, ';
                             }
@@ -213,40 +213,44 @@
                             var $loading = $('#leLoading');
                             $loading.show();
                             $.ajax({
-                                url: 'http://123.56.194.182:8080/api/order',
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/custom',
                                 type: 'post',
-                                data: {
+                                data: JSON.stringify({
                                     gender: gender,
                                     name: name,
                                     email: email,
                                     mobile: mobile,
                                     remark: remark,
-                                    destinationCity: window.formData.destinationCity,
+                                    destCity: window.formData.destCity,
                                     departureDate: window.formData.departureDate,
                                     days: window.formData.days,
                                     numberOfPeople: window.formData.numberOfPeople,
-                                    departureCity: window.formData.departureCity,
+                                    depCity: window.formData.depCity,
                                     flightPref: window.formData.flightPref,
-                                    residencePref: window.formData.residencePref,
+                                    livePref: window.formData.livePref,
                                     hotelLevel: window.formData.hotelLevel,
                                     trafficPref: window.formData.trafficPref
-                                },
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
                                 success: function (res){
-                                    if (res === 'success'){
+                                    if (res && res.msg == 'success'){
                                         le.toPage('t3_3');
+                                    } else {
+                                        alert('提交遇到了错误');
                                     }
                                 },
-                                contentType:'application/json',
-                                dataType:'json',
                                 complete: function (){
                                     $loading.hide();
                                 },
                                 error: function (responseData, textStatus, errorThrown){
                                     console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
                                 }
                             });
                         }
-
                         //le.toPage('t3_3');
                     });
                 }
@@ -274,7 +278,7 @@
         <main role="main" class="ui-content without-header">
             <section class="le-adv-panel narrow customTrip" id="adv">
                 <div class="img-panel">
-                    {{#each productTopInfos}}
+                    {{#each adv}}
                     <div class="img" style="background-image:url({{imageUrl}})">
                         <span class="img-info">{{imageTitle}}</span>
                     </div>
@@ -287,7 +291,7 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">目的地</label>
                             <div class="ui-field-contain">
-                                <select name="destinationCity" id="destinationCity" multiple="multiple" data-native-menu="false" data-mini="true">
+                                <select name="destCity" id="destCity" multiple="multiple" data-native-menu="false" data-mini="true">
                                     {{#each destCities}}
                                     <option value="{{cityName}}">{{cityName}}</option>
                                     {{/each}}
@@ -308,7 +312,7 @@
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label">出发地</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureCity" value="">
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="depCity" value="">
                         </div>
                     </form>
                 </div>
@@ -360,7 +364,7 @@
                         </div>
                     </div>
                     <div class="select-title">住宿类型</div>
-                    <div class="select-items" id="residencePref" style="margin-bottom:0.4em;">
+                    <div class="select-items" id="livePref" style="margin-bottom:0.4em;">
                         <div class="select-grid">
                             <div class="select-btn" id="hotel" le-val="1">度假酒店</div>
                         </div>
