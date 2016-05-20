@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>乐游鸟</title>
+    <title>乐游鸟1.0</title>
     <meta name="description" content="leyoubird" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -16,21 +16,207 @@
     <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.structure.min.css">
 
     <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
-    
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.theme.css">
+
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="assets/js/datepicker.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
 
+    <script type="text/javascript" src="assets/js/handlebars.js"></script>
+    <script type="text/javascript" src="assets/js/util.js"></script>
+    <script type="text/javascript" src="assets/js/leyoubirds.js"></script>
+    
     <script type="text/javascript">
+    Handlebars.registerHelper('when', function(key, val, options) {
+        if (key == val){
+            return options.fn(this);
+        }
+    });
+    window.formData = {
+        productId:null,
+        productName: null
+    };
     $(function (){
-        $('#list li a.le-panel').each(function (){
-            $(this).attr('href', '4.1.html');
-        });
+        var le = new Leyoubird($('#home'));
+        le.requestList = {
+            't4': {
+                url:'http://123.56.194.182:8080/api/summary',
+                type:'get',
+                data: {
+                    category:'deepenExperience'
+                },
+                onFinish: function (){
+                    window.bingAdvScroller($('#adv'));
+
+                    $('#list a').on('click', function (){
+                        var $this = $(this);
+                        var id = $this.attr('le-id');
+                        window.formData.productId = id;
+
+                        le.toPage('t4_1');
+                    });
+                }
+            },
+            't4_1': {
+                url:'http://123.56.194.182:8080/api/travel',
+                type:'get',
+                data: function (){
+                    return {
+                        category:'deepenExperience',
+                        productId: window.formData.productId
+                    }
+                },
+                beforeData: function (data){
+                    window.formData.productName = data.product.imageTitle;
+                    return data;
+                },
+                onFinish: function (){
+                    window.bingAdvScroller($('#adv'));
+
+                    $('#back').on('click', function (){
+                        le.toPage('t4');
+                    });
+
+                    var listFun = function ($target){
+                        var $items = $target.find('.le-list-item');
+                        $items.each(function (){
+                            var $this = $(this);
+                            var isShow = ($this.attr('data-le-open') ? true : false);
+                            var $title = $('.le-list-title', $this);
+                            var $content = $('.le-list-content', $this);
+                            if (!isShow){
+                                $content.hide();
+                                $title.find('.ctrl-icon').removeClass('down left').addClass('left');
+                                $this.attr('data-le-hasOpen', 'false');
+                            } else {
+                                $title.find('.ctrl-icon').removeClass('down left').addClass('down');
+                                $this.attr('data-le-hasOpen', 'true');
+                            }
+
+                            $title.on('click', function (){
+                                var hasOpen = $this.attr('data-le-hasOpen')
+
+                                if (hasOpen !== 'false'){ //close
+                                    $content.stop().slideUp(300);
+                                    $title.find('.ctrl-icon').removeClass('down left').addClass('left');
+                                    $this.attr('data-le-hasOpen', 'false');
+                                } else { //open
+                                    $content.stop().slideDown(300);
+                                    $title.find('.ctrl-icon').removeClass('down left').addClass('down');
+                                    $this.attr('data-le-hasOpen', 'ture');
+                                }
+                                
+                            });
+                        });
+                    }
+                    listFun($('#list'));
+
+                    $('#next').on('click', function (){
+                        le.toPage('t4_2');
+                    });
+                }
+            },
+            't4_2': {
+                url:'',
+                type:'get',
+                data: {
+                    category:'travel',
+                    step:'1.1'
+                },
+                onFinish: function (){
+                    $('#back').on('click', function (){
+                        le.toPage('t4_1');
+                    });
+
+                    $('#date').date();
+
+                    $('#submit').on('click', function (){
+
+                        var gender = $('input[name=gender]:checked').val();
+                        var departureDate = $('input[name=departureDate]').val();
+                        var numberOfPeople = $('input[name=numberOfPeople]').val();
+                        var email = $('input[name=email]').val();
+                        var mobile = $('input[name=mobile]').val();
+                        var remark = $('textarea[name=remark]').val();
+
+                        var str = '';
+                        if (!departureDate){
+                            str += '游玩日期, ';
+                        }
+                        if (!numberOfPeople){
+                            str += '人数, ';
+                        }
+                        if (!email){
+                            str += '邮箱, ';
+                        }
+                        if (!mobile){
+                            str += '手机号, ';
+                        }
+
+                        if (str){
+                            alert('请输入：' + str);
+                            return;
+                        } else {
+                            var $loading = $('#leLoading');
+                            $loading.show();
+                            $.ajax({
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/deepen',
+                                type: 'post',
+                                data: JSON.stringify({
+                                    gender: gender,
+                                    departureDate: departureDate,
+                                    numberOfPeople: numberOfPeople,
+                                    email: email,
+                                    mobile: mobile,
+                                    remark: remark,
+                                    productId: window.formData.productId,
+                                    productName: window.formData.productName
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
+                                success: function (res){
+                                    if (res && res.msg == 'success'){
+                                        le.toPage('t4_3');
+                                    } else {
+                                        alert('提交遇到了错误');
+                                    }
+                                },
+                                complete: function (){
+                                    $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
+                                }
+                            });
+                        }
+                    });
+                }
+            },
+            't4_3': {
+                url:'',
+                type:'get',
+                data: {
+                    category:'travel',
+                    step:'1.1'
+                },
+                onFinish: function (){
+                }
+            },
+        }
+        le.toPage('t4');
     });
     </script>
-
 </head>
-<body class="leyoubird">
-    <div data-role="page" id="home">
+<body class="leyoubird" id="leyoubird">
+    <div class="le-loading" id="leLoading">Loading...</div>
+    <div data-role="page" id="home"></div>
+    <script id="t4" type="text/x-handlebars-template">
         <header data-role="header" class="le-main-header">
             <span class="home-title">
                 <span class="logo"></span>
@@ -38,50 +224,27 @@
             </span>
         </header>
         <main role="main" class="ui-content">
-            <section class="le-adv-panel narrow">
-            	<div class="img-panel">
-            		<div class="img" style="background-image:url(./assets/content/demo8.jpg)">
-            			<span class="img-info">广告信息</span>
-            		</div>
-            		<div class="img">
-            			<span class="img-info">广告信息</span>
-            		</div>
-            	</div>
+            <section class="le-adv-panel narrow" id="adv">
+                <div class="img-panel">
+                    {{#each adv}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
+                </div>
             </section>
             <section class="main-panel">
                 <ul class="le-image-info-panel narrow" id="list">
+                    {{#each summarys}}
                     <li class="le-items">
-                        <a href="" class="le-panel" data-ajax="false">
-                            <img src="./assets/content/demo9.jpg" alt="" class="le-image">
+                        <a class="le-panel" data-ajax="false" le-id="{{id}}">
+                            <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
-                                <span>产品名称1</span>
+                                <span>{{imageTitle}}</span>
                             </div>
                         </a>
                     </li>
-                    <li class="le-items">
-                        <a href="" class="le-panel" data-ajax="false">
-                            <img src="./assets/content/demo10.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a href="" class="le-panel" data-ajax="false">
-                            <img src="./assets/content/demo9.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称3</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a href="" class="le-panel" data-ajax="false">
-                            <img src="./assets/content/demo10.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称4</span>
-                            </div>
-                        </a>
-                    </li>
+                    {{/each}}
                 </ul>
             </section>
         </main>
@@ -103,11 +266,183 @@
                     <div class="le-footer-btn-icon">&#xe64f;</div>
                     <div class="le-footer-btn-content">深度体验</div>
                 </a>
-                <a href="" class="le-footer-btn" data-ajax="false">
-                    <div class="le-footer-btn-icon">&#xf01d8;</div>
-                    <div class="le-footer-btn-content">我的旅行</div>
-                </a>
             </div>
         </footer>
-    </div>
+    </script>
+    <script id="t4_1" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="le-adv-panel ext-narrow" id="adv">
+                <div class="img-panel">
+                    {{#each productTopInfos}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
+                </div>
+            </section>
+            {{#with product}}
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
+                <div class="le-price-panel">
+                    <div class="le-price-title">{{imageTitle}}</div>
+                    <div class="le-price-copy">
+                        {{#each tag}}
+                        <span class="tag">{{this}}</span>
+                        {{/each}}
+                    </div>
+                    {{#with price}}
+                    <div class="le-price"><span class="money">{{currency}}</span>{{money}}<span class="qi">{{#if showQi}}起{{/if}}</span></div>
+                    {{/with}}
+                </div>
+                <div class="le-list-menu" id="list">
+                    <div class="le-list-item" data-le-open="true">
+                        <div class="le-list-title">
+                            <span class="title">产品详情</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            {{#each productDetails}}
+                            <div class="le-list-product-title">
+                                <span class="icon point"></span>
+                                <span>{{title}}</span>
+                            </div>
+                            <div class="le-list-product-info">
+                                <div class="content">
+                                    <p>{{content}}</p>
+                                    {{#each imageUrl}}
+                                    <img src="{{this}}" alt="">
+                                    {{/each}}
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+            {{/with}}
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">费用说明</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>{{fareDetail}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">预定须知</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>{{noticeDetail}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">其他注意事项</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>{{otherDetail}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a id="next" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
+            </section>
+        </main>
+    </script>
+    <script id="t4_2" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em; margin-top:3em;">
+                <div class="le-form">
+                    <form action="">
+                        <div class="le-form-item" id="people">
+                            <label class="le-form-label" for="text-3">联系人</label>
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <input type="radio" name="gender" id="radio-choice-h-2a" value="1" checked="checked">
+                                        <label for="radio-choice-h-2a">先生</label>
+                                        <input type="radio" name="gender" id="radio-choice-h-2b" value="2">
+                                        <label for="radio-choice-h-2b">女士</label>
+                                    </fieldset>
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">游玩日期</label>
+                            <input class="le-form-input" readonly="readonly" type="text" data-clear-btn="false" name="departureDate" id="date" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">人数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="numberOfPeople" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">邮箱</label>
+                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">手机号</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">备注</label>
+                            <textarea name="remark" placeholder="选填，如有其它需求，可以此处填写"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <a id="submit" data-ajax="false" class="ui-btn ui-corner-all">提交</a>
+            </section>
+        </main>
+    </script>
+    <script id="t4_3" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;margin-top:3em;">
+                <div class="success-panel">
+                    <div class="success-title">
+                        <span class="icon">&#xf00e1;</span>
+                        <span>提交成功</span>
+                    </div>
+                    <div class="success-content">
+                        <p>乐游鸟已了解您的需求</p>
+                        <p>旅行顾问将24小时内通过电话联系您</p>
+                        <p style="margin-top:1em;">感谢您使用乐游鸟旅行深度体验服务</p>
+                    </div>
+                </div>
+            </section>
+            <section class="success-confirm-btn-panel">
+                <a data-ajax="false" href="deepenExperience.html" class="ui-btn ui-corner-all">返回首页</a>
+            </section>
+        </main>
+    </script>
 </body>

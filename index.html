@@ -17,24 +17,205 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
 
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.datepicker.theme.css">
+
     <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="assets/js/datepicker.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
 
+    <script type="text/javascript" src="assets/js/handlebars.js"></script>
     <script type="text/javascript" src="assets/js/util.js"></script>
+    <script type="text/javascript" src="assets/js/leyoubirds.js"></script>
     
     <script type="text/javascript">
+    window.formData = {
+        productId:null,
+        productName: null
+    };
     $(function (){
-        var tmp = ''
+        var le = new Leyoubird($('#home'));
+        le.requestList = {
+            't1': {
+                url:'http://123.56.194.182:8080/api/summary',
+                type:'get',
+                data: {
+                    category:'recommend'
+                },
+                onFinish: function (){
+                    $('#list a').on('click', function (){
+                        var $this = $(this);
+                        var id = $this.attr('le-id');
+                        window.formData.productId = id;
 
-        bingAdvScroller($('#adv'));
-        
+                        le.toPage('t1_1');
+                    });
+
+                    window.bingAdvScroller($('#adv'));
+                }
+            },
+            't1_1': {
+                url:'http://123.56.194.182:8080/api/travel',
+                type:'get',
+                data: function (){
+                    return {
+                        category:'recommend',
+                        productId: window.formData.productId
+                    }
+                },
+                beforeData: function (data){
+                    window.formData.productName = data.product.imageTitle;
+                    return data;
+                },
+                onFinish: function (){
+                    window.clearAdvTimmer();
+                    window.bingAdvScroller($('#adv'));
+                    var listFun = function ($target){
+                        var $items = $target.find('.le-list-item');
+                        $items.each(function (){
+                            var $this = $(this);
+                            var isShow = ($this.attr('data-le-open') ? true : false);
+                            var $title = $('.le-list-title', $this);
+                            var $content = $('.le-list-content', $this);
+                            if (!isShow){
+                                $content.hide();
+                                $title.find('.ctrl-icon').removeClass('down left').addClass('left');
+                                $this.attr('data-le-hasOpen', 'false');
+                            } else {
+                                $title.find('.ctrl-icon').removeClass('down left').addClass('down');
+                                $this.attr('data-le-hasOpen', 'true');
+                            }
+
+                            $title.on('click', function (){
+                                var hasOpen = $this.attr('data-le-hasOpen')
+
+                                if (hasOpen !== 'false'){ //close
+                                    $content.stop().slideUp(300);
+                                    $title.find('.ctrl-icon').removeClass('down left').addClass('left');
+                                    $this.attr('data-le-hasOpen', 'false');
+                                } else { //open
+                                    $content.stop().slideDown(300);
+                                    $title.find('.ctrl-icon').removeClass('down left').addClass('down');
+                                    $this.attr('data-le-hasOpen', 'ture');
+                                }
+                                
+                            });
+                        });
+                    }
+                    listFun($('#list'));
+                    $('#back').on('click', function (){
+                        le.toPage('t1');
+                    });
+                    $('#next').on('click', function (){
+                        le.toPage('t1_2');
+                    });
+                }
+            },
+            't1_2': {
+                url:'',
+                type:'get',
+                data: function (){
+                    return {};
+                },
+                onFinish: function (){
+                    window.clearAdvTimmer();
+                    
+                    $('#deptDate').date();
+
+                    $('#back').on('click', function (){
+                        le.toPage('t1_1');
+                    });
+                    $('#submit').on('click', function (){
+
+                        var gender = $('input[name=gender]:checked').val();
+                        var name = $('input[name=name]').val();
+                        var departureDate = $('input[name=departureDate]').val();
+                        var numberOfPeople = $('input[name=numberOfPeople]').val();
+                        var email = $('input[name=email]').val();
+                        var mobile = $('input[name=mobile]').val();
+                        var remark = $('textarea[name=remark]').val();
+
+                        var str = '';
+                        if (!name){
+                            str += '姓名, ';
+                        }
+                        if (!departureDate){
+                            str += '游玩日期, ';
+                        }
+                        if (!numberOfPeople){
+                            str += '人数, ';
+                        }
+                        if (!email){
+                            str += '邮箱, ';
+                        }
+                        if (!mobile){
+                            str += '手机号, ';
+                        }
+
+                        if (str){
+                            alert('请输入：' + str);
+                            return;
+                        } else {
+                            var $loading = $('#leLoading');
+                            $loading.show();
+                            $.ajax({
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/recommend',
+                                type: 'post',
+                                data: JSON.stringify({
+                                    gender: gender,
+                                    name: name,
+                                    departureDate: departureDate,
+                                    numberOfPeople: numberOfPeople,
+                                    email: email,
+                                    mobile: mobile,
+                                    remark: remark,
+                                    productId: window.formData.productId,
+                                    productName: window.formData.productName
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
+                                success: function (res){
+                                    if (res && res.msg == 'success'){
+                                        le.toPage('t1_3');
+                                    } else {
+                                        alert('提交遇到了错误');
+                                    }
+                                },
+                                complete: function (){
+                                    $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
+                                }
+                            });
+                        }
+                    });
+                }
+            }, 
+            't1_3': {
+                url:'',
+                type: 'get',
+                data: function (){
+                    return {};
+                },
+                onFinish: function (){
+
+                }
+            }
+        }
+        le.toPage('t1');
     });
     </script>
 </head>
-<body class="leyoubird">
-    <div data-role="page" id="home">
+<body class="leyoubird" id="leyoubird">
+    <div class="le-loading" id="leLoading">Loading...</div>
+    <div data-role="page" id="home"></div>
+    <script id="t1" type="text/x-handlebars-template">
         <header data-role="header" class="le-main-header">
-            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
             <span class="home-title">
                 <span class="logo"></span>
                 <span>乐游鸟旅行</span>
@@ -43,15 +224,11 @@
         <main role="main" class="ui-content">
             <section class="le-adv-panel" id="adv">
                 <div class="img-panel">
-                    <div class="img" style="/*background-image:url()*/">
-                        <span class="img-info">广告信息</span>
+                    {{#each adv}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
                     </div>
-                    <div class="img">
-                        <span class="img-info">广告信息</span>
-                    </div>
-                    <div class="img">
-                        <span class="img-info">广告信息</span>
-                    </div>
+                    {{/each}}
                 </div>
             </section>
             <section class="main-panel">
@@ -59,46 +236,16 @@
                     <span>热门行程 特色设计 自由出行</span>
                 </div>
                 <ul class="le-image-info-panel" id="list">
+                    {{#each summarys}}
                     <li class="le-items">
-                        <a href="1.1.html" data-ajax="false" data-transition="fade" class="le-panel">
-                            <img src="./assets/content/demo2.jpg" alt="" class="le-image">
+                        <a data-ajax="false" le-id="{{id}}" data-transition="fade" class="le-panel">
+                            <img src="{{imageUrl}}" alt="" class="le-image">
                             <div class="le-image-info">
-                                <span>产品名称1</span>
+                                <span>{{imageTitle}}</span>
                             </div>
                         </a>
                     </li>
-                    <li class="le-items">
-                        <a href="1.1.html" data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo3.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a href="1.1.html" data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo2.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称3</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a href="1.1.html" data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo3.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称4</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="le-items">
-                        <a href="1.1.html" data-ajax="false" class="le-panel">
-                            <img src="./assets/content/demo2.jpg" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>产品名称5</span>
-                            </div>
-                        </a>
-                    </li>
+                    {{/each}}
                 </ul>
             </section>
         </main>
@@ -120,11 +267,185 @@
                     <div class="le-footer-btn-icon">&#xe64f;</div>
                     <div class="le-footer-btn-content">深度体验</div>
                 </a>
-                <a href="" class="le-footer-btn" data-ajax="false">
-                    <div class="le-footer-btn-icon">&#xf01d8;</div>
-                    <div class="le-footer-btn-content">我的旅行</div>
-                </a>
             </div>
         </footer>
-    </div>
+    </script>
+    
+    <script id="t1_1" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="le-adv-panel ext-narrow" id="adv">
+                <div class="img-panel">
+                    {{#each productTopInfos}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
+                </div>
+            </section>
+            {{#with product}}
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
+                <div class="le-price-panel">
+                    <div class="le-price-title">{{imageTitle}}</div>
+                    <div class="le-price-copy">
+                        {{#each tag}}
+                        <span class="tag">{{this}}</span>
+                        {{/each}}
+                    </div>
+                    {{#with price}}
+                    <div class="le-price"><span class="money">{{currency}}</span>{{money}}<span class="qi">{{#if showQi}}起{{/if}}</span></div>
+                    {{/with}}
+                </div>
+                <div class="le-list-menu" id="list">
+                    <div class="le-list-item" data-le-open="true">
+                        <div class="le-list-title">
+                            <span class="title">产品详情</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            {{#each productDetails}}
+                            <div class="le-list-product-title">
+                                <span class="icon point"></span>
+                                <span>{{title}}</span>
+                            </div>
+                            <div class="le-list-product-info">
+                                <div class="content">
+                                    <p>{{content}}</p>
+                                    {{#each imageUrl}}
+                                    <img src="{{this}}" alt="">
+                                    {{/each}}
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+            {{/with}}
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">费用说明</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>{{fareDetail}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">预定须知</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>{{noticeDetail}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="le-list-item">
+                        <div class="le-list-title">
+                            <span class="title">其他注意事项</span>
+                            <span class="ctrl-icon"></span>
+                        </div>
+                        <div class="le-list-content">
+                            <div class="content">
+                                <p>{{otherDetail}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a id="next" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
+            </section>
+        </main>
+    </script>
+
+    <script id="t1_2" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em; margin-top:3em;">
+                <div class="le-form">
+                    <form action="" id="form">
+                        <div class="le-form-item" id="people">
+                            <label class="le-form-label" for="text-3">联系人</label>
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <input type="radio" name="gender" id="radio-choice-h-2a" value="1" checked="checked">
+                                        <label for="radio-choice-h-2a">先生</label>
+                                        <input type="radio" id="radio-choice-h-2b" name="gender" value="2">
+                                        <label for="radio-choice-h-2b">女士</label>
+                                    </fieldset>
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">游玩日期</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureDate" id="deptDate" value="" readonly="readonly">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">人数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="numberOfPeople" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">邮箱</label>
+                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">手机号</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">备注</label>
+                            <textarea name="remark" id="others" placeholder="选填"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <a data-ajax="false" class="ui-btn ui-corner-all" id="submit">提交</a>
+            </section>
+        </main>
+    </script>
+    <script id="t1_3" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;margin-top:3em;">
+                <div class="success-panel">
+                    <div class="success-title">
+                        <span class="icon">&#xf00e1;</span>
+                        <span>提交成功</span>
+                    </div>
+                    <div class="success-content">
+                        <p>乐游鸟已了解您的需求</p>
+                        <p>旅行顾问将24小时内通过电话联系您</p>
+                        <p style="margin-top:1em;">感谢您使用乐游鸟旅行</p>
+                    </div>
+                </div>
+            </section>
+            <section class="success-confirm-btn-panel">
+                <a data-ajax="false" href="index.html" class="ui-btn ui-corner-all">返回首页</a>
+            </section>
+        </main>
+    </script>
 </body>

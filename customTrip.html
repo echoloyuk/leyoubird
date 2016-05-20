@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>乐游鸟</title>
+    <title>乐游鸟1.0</title>
     <meta name="description" content="leyoubird" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -24,23 +24,266 @@
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
     <script type="text/javascript" src="assets/js/datepicker.js"></script>
     <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.datepicker.js"></script>
+
+    <script type="text/javascript" src="assets/js/handlebars.js"></script>
+    <script type="text/javascript" src="assets/js/util.js"></script>
+    <script type="text/javascript" src="assets/js/leyoubirds.js"></script>
     
     <script type="text/javascript">
+    Handlebars.registerHelper('when', function(key, val, options) {
+        if (key == val){
+            return options.fn(this);
+        }
+    });
+
+    window.formData = {
+        destCity: null,
+        departureDate: null,
+        days: null,
+        numberOfPeople: null,
+        depCity:null,
+        livePref: null,
+        hotelLevel: null,
+        trafficPref: null,
+        flightPref: null,
+    };
+
     $(function (){
-        $('#deptDate').date();
+        var le = new Leyoubird($('#home'));
+        le.requestList = {
+            't3': {
+                url:'http://123.56.194.182:8080/api/summary',
+                type:'get',
+                data: {
+                    category:'custom'
+                },
+                onFinish: function (){
+                    window.bingAdvScroller($('#adv'));
+                    $('#departureDate').date();
+
+                    $('#next').on('click', function (){
+                        var destCity = $('#destCity').val();
+                        if (destCity && destCity.length){
+                            destCity = destCity.join(',');
+                        } else {
+                            destCity = '';
+                        }
+                        var departureDate = $('input[name=departureDate]').val();
+                        var days = $('input[name=days').val();
+                        var numberOfPeople = $('input[name=numberOfPeople]').val();
+                        var depCity = $('input[name=depCity').val();
+
+                        var str = '';
+                        if (!destCity){
+                            str += '目的地, ';
+                        }
+                        if (!departureDate){
+                            str += '日期, ';
+                        }
+                        if (!days){
+                            str += '天数, ';
+                        }
+                        if (!numberOfPeople){
+                            str += '人数, ';
+                        }
+                        if (!depCity){
+                            str += '出发地';
+                        }
+                        if (!str){
+                            window.formData.destCity = destCity;
+                            window.formData.departureDate = departureDate;
+                            window.formData.days = days;
+                            window.formData.numberOfPeople = numberOfPeople;
+                            window.formData.depCity = depCity;
+                            le.toPage('t3_1');
+                        } else {
+                            alert('请输入：' + str);
+                        }
+                        //le.toPage('t3_1');
+                    });
+                }
+            },
+            't3_1': {
+                url:'',
+                type:'get',
+                data: {
+                    category:'travel',
+                    step:'1.1'
+                },
+                onFinish: function (){
+                    var selectList = function ($target, data){
+                        var $btns = $('.select-btn', $target);
+                        $btns.on('click', function (){
+                            var $this = $(this);
+                            var leVal = $this.attr('le-val');
+                            if ($this.hasClass('checked')){
+                                $this.removeClass('checked');
+                                window.formData[data] = null;
+                            } else {
+                                $btns.removeClass('checked');
+                                $this.addClass('checked');
+                                window.formData[data] = leVal;
+                            }
+                        });
+                    };
+                    selectList($('#flightPref'), 'flightPref');
+                    selectList($('#livePref'), 'livePref');
+                    selectList($('#hotelLevel'), 'hotelLevel');
+                    selectList($('#trafficPref'), 'trafficPref');
+
+                    $('#hotel').on('click', function (){
+                        if ($(this).hasClass('checked')){
+                            $('#hotelLevel').show();
+                        } else {
+                            window.formData.hotelLevel = null;
+                        }
+                    });
+                    $('#house').on('click', function (){
+                        if ($(this).hasClass('checked')){
+                            $('#hotelLevel').hide();
+                            $('#hotelLevel .select-btn').removeClass('checked');
+                            window.formData.hotelLevel = null;
+                        }
+                    });
+
+                    $('#back').on('click', function (){
+                        le.toPage('t3');
+                    });
+
+                    $('#next').on('click', function (){
+                        var flightPref = window.formData.flightPref;
+                        var livePref = window.formData.livePref;
+                        var hotelLevel = window.formData.hotelLevel;
+                        var trafficPref = window.formData.trafficPref;
+                        var str = '';
+                        if (!flightPref){
+                            str += '航班偏好, ';
+                        }
+                        if (!livePref){
+                            str += '住宿类型, ';
+                        } else if (livePref == '1'){
+                            if (!hotelLevel){
+                                str += '酒店星级, ';
+                            }
+                        }
+                        if (!trafficPref){
+                            str += '交通方式';
+                        }
+                        if (str){
+                            alert('请选择：' + str);
+                        } else {
+                            le.toPage('t3_2');
+                        }
+                    });
+                }
+            },
+            't3_2': {
+                url:'',
+                type:'get',
+                data: {
+                    category:'travel',
+                    step:'1.1'
+                },
+                onFinish: function (){
+                    $('#back').on('click', function (){
+                        le.toPage('t3_1');
+                    });
+
+                    $('#submit').on('click', function (){
+
+                        var gender = $('input[name=gender]:checked').val();
+                        var name = $('input[name=name]').val();
+                        var email = $('input[name=email]').val();
+                        var mobile = $('input[name=mobile]').val();
+                        var remark = $('textarea[name=remark]').val();
+
+                        var str = '';
+                        if (!name){
+                            str += '姓名, ';
+                        }
+                        if (!mobile){
+                            str += '手机号, '
+                        }
+                        if (!email){
+                            str += '邮箱, '
+                        }
+                        if (str){
+                            alert('请输入' + str);
+                        } else {
+                            var $loading = $('#leLoading');
+                            $loading.show();
+                            $.ajax({
+                                //url: 'http://101.200.133.126:808/crosTest/doPost.php',
+                                url: 'http://123.56.194.182:8080/api/order/custom',
+                                type: 'post',
+                                data: JSON.stringify({
+                                    gender: gender,
+                                    name: name,
+                                    email: email,
+                                    mobile: mobile,
+                                    remark: remark,
+                                    destCity: window.formData.destCity,
+                                    departureDate: window.formData.departureDate,
+                                    days: window.formData.days,
+                                    numberOfPeople: window.formData.numberOfPeople,
+                                    depCity: window.formData.depCity,
+                                    flightPref: window.formData.flightPref,
+                                    livePref: window.formData.livePref,
+                                    hotelLevel: window.formData.hotelLevel,
+                                    trafficPref: window.formData.trafficPref
+                                }),
+                                dataType:'json',
+                                contentType:'application/json',
+                                success: function (res){
+                                    if (res && res.msg == 'success'){
+                                        le.toPage('t3_3');
+                                    } else {
+                                        alert('提交遇到了错误');
+                                    }
+                                },
+                                complete: function (){
+                                    $loading.hide();
+                                },
+                                error: function (responseData, textStatus, errorThrown){
+                                    console.log(responseData);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
+                                }
+                            });
+                        }
+                        //le.toPage('t3_3');
+                    });
+                }
+            },
+            't3_3': {
+                url:'',
+                type:'get',
+                data: {
+                    category:'travel',
+                    step:'1.1'
+                },
+                onFinish: function (){
+                    
+                }
+            },
+        }
+        le.toPage('t3');
     });
     </script>
-
 </head>
-<body class="leyoubird">
-    <div data-role="page" id="home">
+<body class="leyoubird" id="leyoubird">
+    <div class="le-loading" id="leLoading">Loading...</div>
+    <div data-role="page" id="home"></div>
+    <script id="t3" type="text/x-handlebars-template">
         <main role="main" class="ui-content without-header">
-            <section class="le-adv-panel narrow customTrip">
-            	<div class="img-panel">
-            		<div class="img" style="background-image:url(./assets/content/demo11.jpg)">
-            			<span class="img-info">定制你的旅行</span>
-            		</div>
-            	</div>
+            <section class="le-adv-panel narrow customTrip" id="adv">
+                <div class="img-panel">
+                    {{#each adv}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
+                </div>
             </section>
             <section class="main-panel">
                 <div class="le-form">
@@ -48,34 +291,33 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">目的地</label>
                             <div class="ui-field-contain">
-                                <select name="select-custom-19" id="select-custom-19" multiple="multiple" data-native-menu="false" data-mini="true">
-                                    <option value="1" selected="selected">曼谷</option>
-                                    <option value="2">清迈</option>
-                                    <option value="3">普吉岛</option>
-                                    <option value="4">甲米</option>
+                                <select name="destCity" id="destCity" multiple="multiple" data-native-menu="false" data-mini="true">
+                                    {{#each destCities}}
+                                    <option value="{{cityName}}">{{cityName}}</option>
+                                    {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">日期</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="deptDate" value="" data-role="date" readonly="readonly">
+                            <label class="le-form-label">日期</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="departureDate" id="departureDate" value="" data-role="date" readonly="readonly">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">天数</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                            <label class="le-form-label">天数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="days" value="">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">人数</label>
-                            <input class="le-form-input" type="number" data-clear-btn="false" name="dest" id="dest" value="">
+                            <label class="le-form-label">人数</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="numberOfPeople" value="">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">出发地</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="dest" id="dest" value="">
+                            <label class="le-form-label">出发地</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="depCity" value="">
                         </div>
                     </form>
                 </div>
                 <div class="le-ctrl-panel">
-                    <a href="3.1.html" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
+                    <a id="next" data-ajax="false" class="ui-btn ui-corner-all">下一步</a>
                 </div>
             </section>
         </main>
@@ -97,11 +339,136 @@
                     <div class="le-footer-btn-icon">&#xe64f;</div>
                     <div class="le-footer-btn-content">深度体验</div>
                 </a>
-                <a href="" class="le-footer-btn" data-ajax="false">
-                    <div class="le-footer-btn-icon">&#xf01d8;</div>
-                    <div class="le-footer-btn-content">我的旅行</div>
-                </a>
             </div>
         </footer>
-    </div>
+    </script>
+    <script id="t3_1" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
+                <div class="le-items-select">
+                    <div class="select-title">航班偏好</div>
+                    <div class="select-items" id="flightPref">
+                        <div class="select-grid">
+                            <div class="select-btn" le-val="1">直飞</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn" le-val="2">中转</div>
+                        </div>
+                    </div>
+                    <div class="select-title">住宿类型</div>
+                    <div class="select-items" id="livePref" style="margin-bottom:0.4em;">
+                        <div class="select-grid">
+                            <div class="select-btn" id="hotel" le-val="1">度假酒店</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn" id="house" le-val="2">特色民宿</div>
+                        </div>
+                    </div>
+                    <div class="select-items" id="hotelLevel" style="display:none;">
+                        <div class="select-grid">
+                            <div class="select-btn" le-val="1">三星经济</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn" le-val="2">四星品质</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn" le-val="3">五星豪华</div>
+                        </div>
+                    </div>
+                    <div class="select-title">交通方式</div>
+                    <div class="select-items" id="trafficPref">
+                        <div class="select-grid" style="width:50%">
+                            <div class="select-btn" le-val="1">包车</div>
+                        </div>
+                        <div class="select-grid">
+                            <div class="select-btn" le-val="2">公共交通</div>
+                        </div>
+                    </div>
+                </div>
+                <a id="next" class="ui-btn ui-corner-all" data-ajax="false">下一步</a>
+            </section>
+        </main>
+    </script>
+    <script id="t3_2" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+            <a id="back" data-ajax="false" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"></a>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;margin-top:3em;">
+                <div class="le-form">
+                    <form action="">
+                        <div class="le-form-item" id="people">
+                            <label class="le-form-label" for="text-3">联系人</label>
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <input type="radio" name="gender" id="radio-choice-h-2a" value="1" checked="checked">
+                                        <label for="radio-choice-h-2a">先生</label>
+                                        <input type="radio" id="radio-choice-h-2b" name="gender" value="2">
+                                        <label for="radio-choice-h-2b">女士</label>
+                                    </fieldset>
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">手机号</label>
+                            <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">邮箱</label>
+                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="">
+                        </div>
+                        <div class="le-form-item">
+                            <label class="le-form-label" for="text-3">备注</label>
+                            <textarea name="remark" id="others" placeholder="选填"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <a id="submit" class="ui-btn ui-corner-all" data-ajax="false">提交</a>
+            </section>
+        </main>
+    </script>
+    <script id="t3_3" type="text/x-handlebars-template">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content" style="margin-bottom:0">
+            <section class="main-panel" style="margin-bottom:0;margin-top:3em;">
+                <div class="success-panel">
+                    <div class="success-title">
+                        <span class="icon">&#xf00e1;</span>
+                        <span>提交成功</span>
+                    </div>
+                    <div class="success-content">
+                        <p>乐游鸟已了解您的出行需求</p>
+                        <p>旅行顾问将24小时内通过电话联系您</p>
+                        <p style="margin-top:1em;">感谢您使用乐游鸟旅行定制服务</p>
+                    </div>
+                </div>
+            </section>
+            <section class="success-confirm-btn-panel">
+                <a href="customTrip.html" data-ajax="false" href="customTrip.html" class="ui-btn ui-corner-all">返回首页</a>
+            </section>
+        </main>
+    </script>
 </body>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>乐游鸟</title>
+    <meta name="description" content="leyoubird" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <link rel="shortcut icon" href="">
+
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/leyoubird.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile.structure.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/leyoubird-mobile.css">
+    
+    <script type="text/javascript" src="assets/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile.min.js"></script>
+
+    <script type="text/javascript">
+    $(function (){
+        $('#list li a.le-panel').each(function (){
+            $(this).attr('href', '4.1.html');
+        });
+    });
+    </script>
+
+</head>
+<body class="leyoubird">
+    <div data-role="page" id="home">
+        <header data-role="header" class="le-main-header">
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content">
+            <section class="le-adv-panel narrow">
+            	<div class="img-panel">
+            		<div class="img" style="background-image:url(./assets/content/demo8.jpg)">
+            			<span class="img-info">广告信息</span>
+            		</div>
+            		<div class="img">
+            			<span class="img-info">广告信息</span>
+            		</div>
+            	</div>
+            </section>
+            <section class="main-panel">
+                <ul class="le-image-info-panel narrow" id="list">
+                    <li class="le-items">
+                        <a href="" class="le-panel" data-ajax="false">
+                            <img src="./assets/content/demo9.jpg" alt="" class="le-image">
+                            <div class="le-image-info">
+                                <span>产品名称1</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="le-items">
+                        <a href="" class="le-panel" data-ajax="false">
+                            <img src="./assets/content/demo10.jpg" alt="" class="le-image">
+                            <div class="le-image-info">
+                                <span>产品名称2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="le-items">
+                        <a href="" class="le-panel" data-ajax="false">
+                            <img src="./assets/content/demo9.jpg" alt="" class="le-image">
+                            <div class="le-image-info">
+                                <span>产品名称3</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="le-items">
+                        <a href="" class="le-panel" data-ajax="false">
+                            <img src="./assets/content/demo10.jpg" alt="" class="le-image">
+                            <div class="le-image-info">
+                                <span>产品名称4</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </main>
+        <footer data-role="footer" class="le-main-footer">
+            <div class="le-footer-btn-list">
+                <a href="index.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xf015c;</div>
+                    <div class="le-footer-btn-content">热门推荐</div>
+                </a>
+                <a href="shuttleService.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xe651;</div>
+                    <div class="le-footer-btn-content">接送服务</div>
+                </a>
+                <a href="customTrip.html" data-ajax="false" data-transition="fade" class="le-footer-btn">
+                    <div class="le-footer-btn-icon">&#xf0126;</div>
+                    <div class="le-footer-btn-content">定制旅行</div>
+                </a>
+                <a class="le-footer-btn focus" data-ajax="false">
+                    <div class="le-footer-btn-icon">&#xe64f;</div>
+                    <div class="le-footer-btn-content">深度体验</div>
+                </a>
+                <a href="" class="le-footer-btn" data-ajax="false">
+                    <div class="le-footer-btn-icon">&#xf01d8;</div>
+                    <div class="le-footer-btn-content">我的旅行</div>
+                </a>
+            </div>
+        </footer>
+    </div>
+</body>
