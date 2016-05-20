@@ -316,7 +316,9 @@
                             <div class="le-list-product-info">
                                 <div class="content">
                                     <p>{{content}}</p>
-                                    <img src="{{imageUrl}}" alt="">
+                                    {{#each imageUrl}}
+                                    <img src="{{this}}" alt="">
+                                    {{/each}}
                                 </div>
                             </div>
                             {{/each}}

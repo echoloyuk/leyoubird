@@ -47,12 +47,14 @@
             't2': {
             }, 
             't2_1': {
-                url:'',
+                url:'http://123.56.194.182:8080/api/summary',
                 type:'get',
-                data: {},
+                data: {
+                    category:'shuttle'
+                },
                 onFinish: function (){
-                    window.clearAdvTimmer();
-
+                    window.bingAdvScroller($('#adv'));
+                    
                     var selectList = function ($target){
                         var $btns = $('.select-btn', $target);
                         $btns.on('click', function (){
@@ -418,38 +420,6 @@
     <div class="le-loading" id="leLoading">Loading...</div>
     <div data-role="page" id="home"></div>
     <script id="t2" type="text/x-handlebars-template">
-        <header data-role="header" class="le-main-header">
-            <span class="home-title">
-                <span class="logo"></span>
-                <span>乐游鸟旅行</span>
-            </span>
-        </header>
-        <main role="main" class="ui-content">
-            <section class="le-adv-panel narrow" id="adv">
-                <div class="img-panel">
-                    {{#each adv}}
-                    <div class="img" style="background-image:url({{imageUrl}})">
-                        <span class="img-info">{{imageTitle}}</span>
-                    </div>
-                    {{/each}}
-                </div>
-            </section>
-            <section class="main-panel">
-                <ul class="le-image-info-panel narrow" id="list">
-                    {{#each summarys}}
-                    <li class="le-items">
-                        <a class="le-panel" data-ajax="false" le-id="{{id}}">
-                            <img src="{{imageUrl}}" alt="" class="le-image">
-                            <div class="le-image-info">
-                                <span>{{name}}</span>
-                            </div>
-                        </a>
-                    </li>
-                    {{/each}}
-                </ul>
-            </section>
-        </main>
-        
     </script>
     <script id="t2_1" type="text/x-handlebars-template">
         <header data-role="header" class="le-main-header">
@@ -460,8 +430,17 @@
             </span>
         </header>
         <main role="main" class="ui-content" style="margin-bottom:0">
-            <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
-                <div class="le-items-select">
+            <section class="le-adv-panel narrow" id="adv">
+                <div class="img-panel">
+                    {{#each adv}}
+                    <div class="img" style="background-image:url({{imageUrl}})">
+                        <span class="img-info">{{imageTitle}}</span>
+                    </div>
+                    {{/each}}
+                </div>
+            </section>
+            <section class="main-panel" style="margin-bottom:4em;padding-bottom:1em;">
+                <div class="le-items-select" style="margin-top:1em;">
                     <div class="select-title">服务类型</div>
                     <div class="select-items" id="serveType">
                         <div class="select-grid">
@@ -588,7 +567,9 @@
                             <div class="le-list-product-info">
                                 <div class="content">
                                     <p>{{content}}</p>
-                                    <img src="{{imageUrl}}" alt="">
+                                    {{#each imageUrl}}
+                                    <img src="{{this}}" alt="">
+                                    {{/each}}
                                 </div>
                             </div>
                             {{/each}}
