@@ -1,17 +1,15 @@
 @font-face {
   font-family: 'iconfont-nav';
   src: url('../font/iconfont-nav.eot');
-  src: url('../font/iconfont-nav.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont-nav.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont-nav.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url('../font/iconfont-nav.svg#iconfont') format('svg');
-  
   /* IE9*/
+  src: url('../font/iconfont-nav.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont-nav.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont-nav.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url('../font/iconfont-nav.svg#iconfont') format('svg');
   /* iOS 4.1- */
 }
 @font-face {
   font-family: 'iconfont';
   src: url('../font/iconfont.eot');
-  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('../font/iconfont.svg#iconfont') format('svg');
-  
   /* IE9*/
+  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../font/iconfont.woff') format('woff'), /* chrome、firefox */ url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('../font/iconfont.svg#iconfont') format('svg');
   /* iOS 4.1- */
 }
 @media screen and (max-width: 2024px) {
@@ -354,6 +352,9 @@
   body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-info > .content {
     margin-left: 20px;
     line-height: 1.8em;
+  }
+  body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-info > .content p {
+    text-align: justify;
   }
   body.leyoubird main.ui-content section.main-panel .le-list-menu .le-list-content .le-list-product-info > .content img {
     width: 100%;
