@@ -290,15 +290,16 @@
             </section>
             {{#with product}}
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em;">
+                <div class="le-price-title">{{imageTitle}}</div>
                 <div class="le-price-panel">
-                    <div class="le-price-title">{{imageTitle}}</div>
+                    
                     <div class="le-price-copy">
                         {{#each tag}}
                         <span class="tag">{{this}}</span>
                         {{/each}}
                     </div>
                     {{#with price}}
-                    <div class="le-price"><span class="money">{{currency}}</span>{{money}}<span class="qi">{{#if showQi}}起{{/if}}</span></div>
+                    <div class="le-price"><span class="money">{{currency}}</span>{{money}}<span class="qi">{{unit}}</span></div>
                     {{/with}}
                 </div>
                 <div class="le-list-menu" id="list">
