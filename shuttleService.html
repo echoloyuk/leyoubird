@@ -130,6 +130,12 @@
                         seats: window.formData.seats
                     }
                 },
+                beforeData: function (res){
+                    if (!res.summarys || !res.summarys.length){
+                        res.summarysIsEmpty = true;
+                    }
+                    return res;
+                },
                 onFinish: function (){
                     $('#back').on('click', function (){
                         le.toPage('t2_1');
@@ -314,6 +320,7 @@
                     window.bindMsgCodeBtn($('#msgBtn'));
 
                     $('#submit').on('click', function (){
+                        var gender = $('input[name=gender]:checked').val();
                         var name = $('input[name=name]').val();
                         var date = $('input[name=date]').val();
                         var time = $('input[name=time]').val();
@@ -364,6 +371,7 @@
                                 url: 'http://123.56.194.182:8080/api/order/shuttle',
                                 type: 'post',
                                 data: JSON.stringify({
+                                    gender: gender,
                                     name: name,
                                     date: date,
                                     time: time,
@@ -507,6 +515,9 @@
         </header>
         <main role="main" class="ui-content">
             <section class="main-panel" style="margin-top:2em;">
+                {{#if summarysIsEmpty}}
+                产品正在开发，敬请期待
+                {{/if}}
                 <ul class="le-shuttle-service-list" id="list">
                 {{#each summarys}}
                     <li>
@@ -694,9 +705,21 @@
             <section class="main-panel" style="margin-bottom:0;padding-bottom:1em; margin-top:3em;">
                 <div class="le-form">
                     <form action="">
-                        <div class="le-form-item">
+                        <div class="le-form-item" id="people">
                             <label class="le-form-label" for="text-3">联系人</label>
-                            <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <input type="radio" name="gender" id="radio-choice-h-2a" value="1" checked="checked">
+                                        <label for="radio-choice-h-2a">先生</label>
+                                        <input type="radio" id="radio-choice-h-2b" name="gender" value="2">
+                                        <label for="radio-choice-h-2b">女士</label>
+                                    </fieldset>
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <input class="le-form-input" type="text" data-clear-btn="false" name="name" value="">
+                                </div>
+                            </div>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">日期</label>

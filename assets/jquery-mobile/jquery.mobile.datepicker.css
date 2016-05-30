@@ -129,6 +129,9 @@ div.hasDatepicker {
 .ui-datepicker .ui-state-disabled {
 	opacity: 1;
 }
+.ui-datepicker .ui-state-disabled .ui-state-default{
+	color:#aaa;
+}
 .ui-datepicker.ui-corner-all,
 .ui-datepicker .ui-datepicker-header.ui-corner-all {
 	border-radius: 0;
