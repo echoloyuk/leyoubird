@@ -136,6 +136,7 @@
                     $('#submit').on('click', function (){
 
                         var gender = $('input[name=gender]:checked').val();
+                        var name = $('input[name=name]').val();
                         var departureDate = $('input[name=departureDate]').val();
                         var numberOfPeople = $('input[name=numberOfPeople]').val();
                         var email = $('input[name=email]').val();
@@ -143,6 +144,9 @@
                         var remark = $('textarea[name=remark]').val();
 
                         var str = '';
+                        if (!name){
+                            str += '联系人姓名, '
+                        }
                         if (!departureDate){
                             str += '游玩日期, ';
                         }
@@ -168,6 +172,7 @@
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
+                                    name: name,
                                     departureDate: departureDate,
                                     numberOfPeople: numberOfPeople,
                                     email: email,
