@@ -188,6 +188,8 @@
                         le.toPage('t3_1');
                     });
 
+                    window.bindMsgCodeBtn($('#msgBtn'));
+
                     $('#submit').on('click', function (){
 
                         var gender = $('input[name=gender]:checked').val();
@@ -428,6 +430,14 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
                             <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item" style="width:100px">
+                                    <input class="le-form-input" type="number" data-clear-btn="false" name="identifyCode" value="" placeholder="验证码">
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <div class="le-msgcode-btn" data-ajax="false" id="msgBtn">获取验证码</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">邮箱</label>

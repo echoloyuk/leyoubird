@@ -12,7 +12,7 @@
                 clearInterval(timmer);
             } catch(e){}
 
-            var t = 60;
+            var t = 120;
             $this.text(t);
             var timmer = setInterval(function (){
                 t--;

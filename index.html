@@ -123,6 +123,32 @@
                     
                     $('#deptDate').date();
 
+                    $('#msgBtn').on('click', function (){
+                        var $this = $(this);
+                        console.log($this.hasClass('disabled'));
+                        if ($this.hasClass('disabled')){
+                            return;
+                        }
+                        var mobile = $('input[name=mobile]').val();
+                        if (!mobile){
+                            alert('请填写手机号');
+                            return;
+                        }
+                        $.ajax({
+                            url:'http://123.56.194.182:8090/api/sms/identifyCode/' + mobile,
+                            type:'get',
+                            dataType:'json',
+                            contentType:'application/json',
+                            success: function (res){
+                                if (!res || res.msg != 'success'){
+                                    alert('提交遇到了错误');
+                                }
+                            }
+                        });
+
+                    });
+                    window.bindMsgCodeBtn($('#msgBtn'));
+
                     $('#back').on('click', function (){
                         le.toPage('t1_1');
                     });
@@ -135,6 +161,7 @@
                         var email = $('input[name=email]').val();
                         var mobile = $('input[name=mobile]').val();
                         var remark = $('textarea[name=remark]').val();
+                        var identifyCode = $('input[name=identifyCode]').val();
 
                         var str = '';
                         if (!name){
@@ -151,6 +178,9 @@
                         }
                         if (!mobile){
                             str += '手机号, ';
+                        }
+                        if (!identifyCode){
+                            str += '验证码, '
                         }
 
                         if (str){
@@ -190,6 +220,9 @@
                                     console.log(responseData);
                                     console.log(textStatus);
                                     console.log(errorThrown);
+                                },
+                                beforeSend: function (xhr){
+                                    xhr.setRequestHeader('identifyCode', identifyCode);
                                 }
                             });
                         }
@@ -411,6 +444,14 @@
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
                             <input class="le-form-input" type="number" data-clear-btn="false" name="mobile" value="">
+                            <div class="le-form-grid">
+                                <div class="le-form-grid-item" style="width:100px">
+                                    <input class="le-form-input" type="number" data-clear-btn="false" name="identifyCode" value="" placeholder="验证码">
+                                </div>
+                                <div class="le-form-grid-item" style="width:100px;">
+                                    <div class="le-msgcode-btn" data-ajax="false" id="msgBtn">获取验证码</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">备注</label>
