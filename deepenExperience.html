@@ -133,6 +133,29 @@
 
                     $('#date').date();
 
+                    $('#msgBtn').on('click', function (){
+                        var $this = $(this);
+                        console.log($this.hasClass('disabled'));
+                        if ($this.hasClass('disabled')){
+                            return;
+                        }
+                        var mobile = $('input[name=mobile]').val();
+                        if (!mobile){
+                            alert('请填写手机号');
+                            return;
+                        }
+                        $.ajax({
+                            url:'http://123.56.194.182:8090/api/sms/identifyCode/' + mobile,
+                            type:'get',
+                            dataType:'json',
+                            contentType:'application/json',
+                            success: function (res){
+                                if (!res || res.msg != 'success'){
+                                    alert('提交遇到了错误');
+                                }
+                            }
+                        });
+                    });
                     window.bindMsgCodeBtn($('#msgBtn'));
 
                     $('#submit').on('click', function (){
@@ -141,9 +164,10 @@
                         var name = $('input[name=name]').val();
                         var departureDate = $('input[name=departureDate]').val();
                         var numberOfPeople = $('input[name=numberOfPeople]').val();
-                        var email = $('input[name=email]').val();
+                        var wechat = $('input[name=wechat]').val();
                         var mobile = $('input[name=mobile]').val();
                         var remark = $('textarea[name=remark]').val();
+                        var identifyCode = $('input[name=identifyCode]').val();
 
                         var str = '';
                         if (!name){
@@ -155,11 +179,14 @@
                         if (!numberOfPeople){
                             str += '人数, ';
                         }
-                        if (!email){
-                            str += '邮箱, ';
+                        if (!wechat){
+                            str += '微信号, ';
                         }
                         if (!mobile){
                             str += '手机号, ';
+                        }
+                        if (!identifyCode){
+                            str += '验证码, '
                         }
 
                         if (str){
@@ -170,14 +197,14 @@
                             $loading.show();
                             $.ajax({
                                 //url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                url: 'http://123.56.194.182:8080/api/order/deepen',
+                                url: 'http://123.56.194.182:8090/api/order/deepen',
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
                                     name: name,
                                     departureDate: departureDate,
                                     numberOfPeople: numberOfPeople,
-                                    email: email,
+                                    wechat: wechat,
                                     mobile: mobile,
                                     remark: remark,
                                     productId: window.formData.productId,
@@ -199,6 +226,9 @@
                                     console.log(responseData);
                                     console.log(textStatus);
                                     console.log(errorThrown);
+                                },
+                                beforeSend: function (xhr){
+                                    xhr.setRequestHeader('identifyCode', identifyCode);
                                 }
                             });
                         }
@@ -409,8 +439,8 @@
                             <input class="le-form-input" type="number" data-clear-btn="false" name="numberOfPeople" value="">
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">邮箱</label>
-                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="">
+                            <label class="le-form-label" for="text-3">微信号</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="wechat" value="">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>

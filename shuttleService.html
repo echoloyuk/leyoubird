@@ -221,6 +221,29 @@
 
                     $('#date').date();
 
+                    $('#msgBtn').on('click', function (){
+                        var $this = $(this);
+                        console.log($this.hasClass('disabled'));
+                        if ($this.hasClass('disabled')){
+                            return;
+                        }
+                        var mobile = $('input[name=mobile]').val();
+                        if (!mobile){
+                            alert('请填写手机号');
+                            return;
+                        }
+                        $.ajax({
+                            url:'http://123.56.194.182:8090/api/sms/identifyCode/' + mobile,
+                            type:'get',
+                            dataType:'json',
+                            contentType:'application/json',
+                            success: function (res){
+                                if (!res || res.msg != 'success'){
+                                    alert('提交遇到了错误，短信验证码在120秒之内只能提交一次');
+                                }
+                            }
+                        });
+                    });
                     window.bindMsgCodeBtn($('#msgBtn'));
 
                     $('#submit').on('click', function (){
@@ -230,9 +253,10 @@
                         var flightNo = $('input[name=flightNo]').val().toUpperCase();
                         var hotelName = $('input[name=hotelName]').val();
                         var hotelAddress = $('textarea[name=hotelAddress]').val();
-                        var email = $('input[name=email]').val();
+                        var wechat = $('input[name=wechat]').val();
                         var mobile = $('input[name=mobile]').val();
                         var remark = $('textarea[name=remark]').val();
+                        var identifyCode = $('input[name=identifyCode]').val();
 
                         var str = '';
                         if (!name){
@@ -250,11 +274,14 @@
                         if (!hotelAddress){
                             str += '酒店地址, ';
                         }
-                        if (!email){
-                            str += '邮箱, ';
+                        if (!wechat){
+                            str += '微信号, ';
                         }
                         if (!mobile){
                             str += '手机号, ';
+                        }
+                        if (!identifyCode){
+                            str += '验证码, '
                         }
 
                         if (str){
@@ -264,7 +291,7 @@
                             $loading.show();
                             $.ajax({
                                 //url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                url: 'http://123.56.194.182:8080/api/order/shuttle',
+                                url: 'http://123.56.194.182:8090/api/order/shuttle',
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
@@ -273,7 +300,7 @@
                                     flightNo: flightNo,
                                     hotelName: hotelName,
                                     hotelAddress: hotelAddress,
-                                    email: email,
+                                    wechat: wechat,
                                     mobile: mobile,
                                     remark: remark,
                                     productId: window.formData.productId,
@@ -287,7 +314,7 @@
                                     if (res && res.msg == 'success'){
                                         le.toPage('t2_5');
                                     } else {
-                                        alert('提交遇到了错误');
+                                        alert('提交遇到了错误，短信验证码在120秒之内只能提交一次');
                                     }
                                 },
                                 complete: function (){
@@ -297,6 +324,9 @@
                                     console.log(responseData);
                                     console.log(textStatus);
                                     console.log(errorThrown);
+                                },
+                                beforeSend: function (xhr){
+                                    xhr.setRequestHeader('identifyCode', identifyCode);
                                 }
                             });
                         }
@@ -317,6 +347,29 @@
 
                     $('#date').date();
 
+                    $('#msgBtn').on('click', function (){
+                        var $this = $(this);
+                        console.log($this.hasClass('disabled'));
+                        if ($this.hasClass('disabled')){
+                            return;
+                        }
+                        var mobile = $('input[name=mobile]').val();
+                        if (!mobile){
+                            alert('请填写手机号');
+                            return;
+                        }
+                        $.ajax({
+                            url:'http://123.56.194.182:8090/api/sms/identifyCode/' + mobile,
+                            type:'get',
+                            dataType:'json',
+                            contentType:'application/json',
+                            success: function (res){
+                                if (!res || res.msg != 'success'){
+                                    alert('提交遇到了错误，短信验证码在120秒之内只能提交一次');
+                                }
+                            }
+                        });
+                    });
                     window.bindMsgCodeBtn($('#msgBtn'));
 
                     $('#submit').on('click', function (){
@@ -328,9 +381,10 @@
                         var departureHotelAddress =  $('textarea[name=departureHotelAddress]').val();
                         var arrivalHotelName = $('input[name=arrivalHotelName]').val();
                         var arrivalHotelAddress = $('textarea[name=arrivalHotelAddress]').val();
-                        var email = $('input[name=email]').val();
+                        var wechat = $('input[name=wechat]').val();
                         var mobile = $('input[name=mobile]').val();
                         var remark = $('textarea[name=remark]').val();
+                        var identifyCode = $('input[name=identifyCode]').val();
 
                         var str = '';
                         if (!name){
@@ -354,11 +408,14 @@
                         if (!arrivalHotelAddress){
                             str += '到达酒店地址, ';
                         }
-                        if (!email){
-                            str += '邮箱, ';
+                        if (!wechat){
+                            str += '微信号, ';
                         }
                         if (!mobile){
                             str += '手机号';
+                        }
+                        if (!identifyCode){
+                            str += '验证码, '
                         }
 
                         if (str){
@@ -368,7 +425,7 @@
                             $loading.show();
                             $.ajax({
                                 //url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                url: 'http://123.56.194.182:8080/api/order/shuttle',
+                                url: 'http://123.56.194.182:8090/api/order/shuttle',
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
@@ -379,7 +436,7 @@
                                     departureHotelAddress: departureHotelAddress,
                                     arrivalHotelName: arrivalHotelName,
                                     arrivalHotelAddress: arrivalHotelAddress,
-                                    email: email,
+                                    wechat: wechat,
                                     mobile: mobile,
                                     remark: remark,
                                     productId: window.formData.productId,
@@ -393,7 +450,7 @@
                                     if (res && res.msg == 'success'){
                                         le.toPage('t2_5');
                                     } else {
-                                        alert('提交遇到了错误');
+                                        alert('提交遇到了错误，短信验证码在120秒之内只能提交一次');
                                     }
                                 },
                                 complete: function (){
@@ -403,6 +460,9 @@
                                     console.log(responseData);
                                     console.log(textStatus);
                                     console.log(errorThrown);
+                                },
+                                beforeSend: function (xhr){
+                                    xhr.setRequestHeader('identifyCode', identifyCode);
                                 }
                             });
                         }
@@ -674,8 +734,8 @@
                             <textarea name="hotelAddress" placeholder="请填写接送酒店英文地址"></textarea>
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">邮箱</label>
-                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="" placeholder="电子凭证将发送至邮箱">
+                            <label class="le-form-label" for="text-3">微信号</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="wechat" value="" placeholder="请输入微信账号">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">手机号</label>
@@ -766,8 +826,8 @@
                             </div>
                         </div>
                         <div class="le-form-item">
-                            <label class="le-form-label" for="text-3">邮箱</label>
-                            <input class="le-form-input" type="email" data-clear-btn="false" name="email" value="" placeholder="电子凭证将发送至邮箱">
+                            <label class="le-form-label" for="text-3">微信号</label>
+                            <input class="le-form-input" type="text" data-clear-btn="false" name="wechat" value="" placeholder="请输入微信账号">
                         </div>
                         <div class="le-form-item">
                             <label class="le-form-label" for="text-3">备注</label>
