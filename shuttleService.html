@@ -233,7 +233,7 @@
                             return;
                         }
                         $.ajax({
-                            url:'http://123.56.194.182:8090/api/sms/identifyCode/' + mobile,
+                            url:'http://123.56.194.182:8080/api/sms/identifyCode/' + mobile,
                             type:'get',
                             dataType:'json',
                             contentType:'application/json',
@@ -291,7 +291,7 @@
                             $loading.show();
                             $.ajax({
                                 //url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                url: 'http://123.56.194.182:8090/api/order/shuttle',
+                                url: 'http://123.56.194.182:8080/api/order/shuttle',
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
@@ -359,7 +359,7 @@
                             return;
                         }
                         $.ajax({
-                            url:'http://123.56.194.182:8090/api/sms/identifyCode/' + mobile,
+                            url:'http://123.56.194.182:8080/api/sms/identifyCode/' + mobile,
                             type:'get',
                             dataType:'json',
                             contentType:'application/json',
@@ -425,7 +425,7 @@
                             $loading.show();
                             $.ajax({
                                 //url: 'http://101.200.133.126:808/crosTest/doPost.php',
-                                url: 'http://123.56.194.182:8090/api/order/shuttle',
+                                url: 'http://123.56.194.182:8080/api/order/shuttle',
                                 type: 'post',
                                 data: JSON.stringify({
                                     gender: gender,
