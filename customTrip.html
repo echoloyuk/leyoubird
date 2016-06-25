@@ -303,7 +303,14 @@
     <div class="le-loading" id="leLoading">Loading...</div>
     <div data-role="page" id="home"></div>
     <script id="t3" type="text/x-handlebars-template">
-        <main role="main" class="ui-content without-header">
+        <header data-role="header" class="le-main-header">
+            <!--<a href="about.html" data-transition="slide" class="ui-btn ui-corner-all">Anchor</a>-->
+            <span class="home-title">
+                <span class="logo"></span>
+                <span>乐游鸟旅行</span>
+            </span>
+        </header>
+        <main role="main" class="ui-content">
             <section class="le-adv-panel narrow customTrip" id="adv">
                 <div class="img-panel">
                     {{#each adv}}
